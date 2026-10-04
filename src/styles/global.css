@@ -219,6 +219,21 @@ select:focus-visible {
   pointer-events: none;
 }
 
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .borde-almenado::before {
+      animation: almenas-subir linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+
+    @keyframes almenas-subir {
+      from { transform: translateY(100%); }
+      to { transform: none; }
+    }
+  }
+}
+
 /* Antetítulo con punto de naranja-grill */
 .antetitulo {
   display: inline-flex;

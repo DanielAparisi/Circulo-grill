@@ -6,7 +6,8 @@ export interface MenuItem {
   name: string;
   price: string;           // "7,5", "5 / 5,5"
   description?: string;
-  isHouseSpecial?: boolean; // Los platos "Círculo" de la casa
+  isHouseSpecial?: boolean; // Sale en "De la casa"; su foto va en src/assets/images/platos/<id>.jpg
+  photoAlt?: string;        // Descripción de esa foto para lectores de pantalla
   isNew?: boolean;
   isSpicy?: boolean;        // Jalapeños, búfalo, chili (manual 10.2)
   isVegetarian?: boolean;   // La hoja verde de la carta
@@ -35,7 +36,6 @@ export const menuCategories: MenuCategory[] = [
         name: 'El Círculo Combo',
         price: '13',
         description: 'Aros de cebolla, 4 alitas, 4 palitos de queso y 4 delicias de jalapeño, con salsas ranchera y BBQ.',
-        isHouseSpecial: true,
       },
       {
         id: 'alitas-pollo',
@@ -56,6 +56,8 @@ export const menuCategories: MenuCategory[] = [
         price: '12',
         description: 'Cubiertos de chili casero, queso, pico de gallo, jalapeños y salsa agria. Añade guacamole por 2 € más.',
         isSpicy: true,
+        isHouseSpecial: true,
+        photoAlt: 'Nachos mexicanos con jalapeños, pico de gallo, chili y salsa agria, servidos en la terraza',
       },
       {
         id: 'cheesy-bacon-fries',
@@ -151,7 +153,6 @@ export const menuCategories: MenuCategory[] = [
         name: 'Círculo Burger',
         price: '12',
         description: 'Tomate, lechuga, cebolla caramelizada y queso de cabra.',
-        isHouseSpecial: true,
       },
       {
         id: 'n-320',
@@ -202,6 +203,8 @@ export const menuCategories: MenuCategory[] = [
         name: 'Sweet Castle',
         price: '16',
         description: "Doble carne, cheddar, bacon, tomate, lechuga y cebolla, con nuestra salsa casera de Jack Daniel's.",
+        isHouseSpecial: true,
+        photoAlt: 'Sweet Castle: hamburguesa de doble carne con cheddar fundido, bacon y cebolla morada, con patatas sobre pizarra',
       },
     ],
   },
@@ -307,6 +310,7 @@ export const menuCategories: MenuCategory[] = [
         price: '20 / 13',
         description: 'Bañado en salsa BBQ, con patatas fritas. Entero (20) o medio (13).',
         isHouseSpecial: true,
+        photoAlt: 'Costillar Círculo glaseado en salsa BBQ con patatas fritas, en una mesa del local',
       },
       {
         id: 'entrecot',
@@ -344,7 +348,7 @@ export const menuCategories: MenuCategory[] = [
       { id: 'coulant', name: 'Coulant de chocolate', price: '5' },
       { id: 'gofre-helado', name: 'Gofre con helado y nata', price: '5' },
       { id: 'brownie', name: 'Brownie con helado', price: '6' },
-      { id: 'circulo-pancakes', name: 'Círculo Pancakes', price: '6', isHouseSpecial: true },
+      { id: 'circulo-pancakes', name: 'Círculo Pancakes', price: '6' },
       { id: 'copa-oreo', name: 'Copa Oreo', price: '6' },
       { id: 'trozo-tarta', name: 'Trozo de tarta', price: '5' },
       { id: 'batido-helado', name: 'Batido de helado', price: '6' },

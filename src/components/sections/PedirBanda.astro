@@ -6,7 +6,7 @@ const conReparto = locations.filter((loc) => loc.hasDelivery || loc.hasTakeAway)
 
 <section class="pedir borde-almenado" id="pedir" aria-labelledby="pedir-titulo">
   <div class="container pedir__grid">
-    <div class="pedir__texto">
+    <div class="pedir__texto" data-reveal>
       <p class="antetitulo pedir__ante">Take away · Delivery</p>
       <h2 id="pedir-titulo" class="pedir__titulo">¿Hoy cenas en casa?</h2>
       <p class="pedir__entradilla">
@@ -15,8 +15,8 @@ const conReparto = locations.filter((loc) => loc.hasDelivery || loc.hasTakeAway)
     </div>
 
     <ul class="pedir__locales" role="list">
-      {conReparto.map((loc) => (
-        <li class="pedir__local">
+      {conReparto.map((loc, i) => (
+        <li class="pedir__local" data-reveal style={`--reveal-i: ${i + 1}`}>
           <h3 class="pedir__nombre">{loc.name}</h3>
           <p class="pedir__horario">{loc.hours.summary}</p>
           <a class="pedir__telefono" href={`tel:${loc.primaryPhone.tel}`}>
@@ -124,6 +124,8 @@ const conReparto = locations.filter((loc) => loc.hasDelivery || loc.hasTakeAway)
 
   /* El teléfono es la acción: grande, tocable, en el oro de la marca como pastilla */
   .pedir__telefono {
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -142,7 +144,43 @@ const conReparto = locations.filter((loc) => loc.hasDelivery || loc.hasTakeAway)
     transition: background-color var(--dur-fast) ease;
   }
 
+  /* Resplandor de brasa: un halo que respira detrás del botón */
+  .pedir__telefono::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--naranja-grill);
+    filter: blur(14px);
+    opacity: 0.15;
+    animation: brasa 3.4s ease-in-out infinite;
+  }
+
+  .pedir__local + .pedir__local .pedir__telefono::before {
+    animation-delay: -1.7s;
+  }
+
+  @keyframes brasa {
+    0%, 100% { opacity: 0.12; transform: scale(0.96); }
+    50% { opacity: 0.5; transform: scale(1.03); }
+  }
+
+  .pedir__telefono svg {
+    transform-origin: 50% 50%;
+  }
+
   @media (hover: hover) {
+    .pedir__telefono:hover svg {
+      animation: timbre 500ms ease-in-out;
+    }
+
+    @keyframes timbre {
+      0%, 100% { transform: rotate(0); }
+      20%, 60% { transform: rotate(-14deg); }
+      40%, 80% { transform: rotate(14deg); }
+    }
+
     .pedir__telefono:hover {
       background-color: #cb7a07;
       color: var(--texto-sobre-oro);

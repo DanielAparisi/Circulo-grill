@@ -4,7 +4,9 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
+    transition-delay: 0s !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
@@ -17,6 +19,14 @@
   transition: opacity var(--dur-slow) var(--ease-out),
               transform var(--dur-slow) var(--ease-out);
   transition-delay: calc(var(--reveal-i, 0) * 60ms);
+}
+
+[data-reveal="suave"] {
+  transform: translateY(12px);
+}
+
+[data-reveal="zoom"] {
+  transform: scale(0.96);
 }
 
 [data-reveal].is-visible {
@@ -40,4 +50,25 @@ html:not(.js) [data-reveal] {
     transform: translateY(-2px);
     box-shadow: var(--sombra-elevada);
   }
+}
+
+/* Entrada de la portada: CSS puro, arranca con el primer pintado (no espera a JS) */
+@keyframes entrada-subir {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes entrada-linea {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+
+@keyframes entrada-trazo {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.entrada {
+  animation: entrada-subir var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 120ms);
 }

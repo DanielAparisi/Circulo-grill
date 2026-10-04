@@ -83,6 +83,12 @@ import Button from '../ui/Button.astro';
     transition: background-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
   }
 
+  /* Al bajar, la cabecera se despega del contenido con una sombra suave */
+  .site-header.is-scrolled {
+    box-shadow: var(--sombra-carta);
+    border-bottom-color: transparent;
+  }
+
   .header-container {
     display: flex;
     align-items: center;
@@ -227,6 +233,11 @@ import Button from '../ui/Button.astro';
 </style>
 
 <script>
+  const header = document.getElementById('site-header');
+  const marcarScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  marcarScroll();
+  window.addEventListener('scroll', marcarScroll, { passive: true });
+
   const toggleBtn = document.getElementById('mobile-menu-toggle');
   const drawer = document.getElementById('mobile-nav-drawer');
   const links = drawer?.querySelectorAll('a');

@@ -1,12 +1,22 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { menuCategories } from '../../data/menu';
+
+// Fotos de los platos: src/assets/images/platos/<id del plato>.jpg
+const fotos = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/images/platos/*.{jpg,jpeg,png,webp}',
+  { eager: true }
+);
+const fotoDe = (id: string) =>
+  Object.entries(fotos).find(([ruta]) => ruta.split('/').pop()?.replace(/\.\w+$/, '') === id)?.[1].default;
 
 // Un plato de la casa por sección de la carta (manual 10.4)
 const platos = menuCategories.flatMap((cat) =>
   cat.items
     .filter((item) => item.isHouseSpecial)
     .slice(0, 1)
-    .map((item) => ({ ...item, categoria: cat.navLabel }))
+    .map((item) => ({ ...item, categoria: cat.navLabel, foto: fotoDe(item.id) }))
 );
 ---
 
@@ -19,14 +29,26 @@ const platos = menuCategories.flatMap((cat) =>
 
   <ol class="casa__lista" role="list">
     {platos.map((plato, i) => (
-      <li class="casa__plato" data-reveal style={`--reveal-i: ${i}`}>
+      <li class:list={['casa__plato', plato.foto && 'casa__plato--foto']} data-reveal style={`--reveal-i: ${i}`}>
+        {plato.foto && (
+          <div class="casa__foto">
+            <Image
+              src={plato.foto}
+              alt={plato.photoAlt ?? plato.name}
+              widths={[360, 560, 760]}
+              sizes="(min-width: 1140px) 350px, (min-width: 860px) 30vw, 80vw"
+            />
+          </div>
+        )}
         <span class="casa__numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-        <p class="casa__categoria etiqueta">{plato.categoria}</p>
-        <h4 class="casa__nombre">{plato.name}</h4>
-        {plato.description && <p class="casa__desc">{plato.description}</p>}
-        <p class="casa__precio">
-          <span class="visually-hidden">Precio: </span>{plato.price}
-        </p>
+        <div class="casa__cuerpo">
+          <p class="casa__categoria etiqueta">{plato.categoria}</p>
+          <h4 class="casa__nombre">{plato.name}</h4>
+          {plato.description && <p class="casa__desc">{plato.description}</p>}
+          <p class="casa__precio">
+            <span class="visually-hidden">Precio: </span>{plato.price}
+          </p>
+        </div>
       </li>
     ))}
   </ol>
@@ -106,10 +128,6 @@ const platos = menuCategories.flatMap((cat) =>
     .casa__plato {
       scroll-snap-align: start;
     }
-
-    .casa__numero {
-      margin-bottom: var(--espacio-3);
-    }
   }
 
   @media (min-width: 640px) {
@@ -118,9 +136,10 @@ const platos = menuCategories.flatMap((cat) =>
     }
   }
 
-  @media (min-width: 1040px) {
+  /* Escritorio: tantas columnas como platos (3 o 4) */
+  @media (min-width: 860px) {
     .casa__lista {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
   }
 
@@ -128,15 +147,36 @@ const platos = menuCategories.flatMap((cat) =>
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: var(--espacio-5);
     border: 1px solid var(--borde-fuerte);
     border-radius: var(--radio-l);
     overflow: hidden;
     transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
 
-  /* Disco oro asomando por la esquina: el recurso circular de los destacados */
-  .casa__plato::after {
+  /* Foto 4:3 recortada; el color de fondo evita el hueco mientras carga */
+  .casa__foto {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: var(--crema-hundido);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .casa__foto :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .casa__cuerpo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--espacio-5);
+  }
+
+  /* Disco oro asomando por la esquina, solo en las tarjetas sin foto */
+  .casa__plato:not(.casa__plato--foto)::after {
     content: "";
     position: absolute;
     width: 110px;
@@ -158,6 +198,10 @@ const platos = menuCategories.flatMap((cat) =>
     .casa__plato:hover::after {
       transform: scale(1.25);
     }
+
+    .casa__plato:hover .casa__foto :global(img) {
+      transform: scale(1.05);
+    }
   }
 
   .casa__numero {
@@ -167,7 +211,22 @@ const platos = menuCategories.flatMap((cat) =>
     font-size: 0.875rem;
     font-weight: 800;
     color: var(--texto-ambar);
-    margin-bottom: var(--espacio-5);
+    margin: var(--espacio-5) var(--espacio-5) calc(-1 * var(--espacio-2));
+  }
+
+  /* Con foto, el número va en un círculo crema sobre la esquina de la imagen */
+  .casa__plato--foto .casa__numero {
+    position: absolute;
+    top: var(--espacio-3);
+    left: var(--espacio-3);
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    border-radius: var(--radio-pill);
+    background-color: var(--crema);
+    box-shadow: var(--sombra-carta);
   }
 
   .casa__categoria {

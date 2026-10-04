@@ -62,6 +62,29 @@ const Tag = href ? 'a' : 'button';
     white-space: nowrap;
   }
 
+  .btn--primary {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .btn--primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 35%, rgb(255 252 241 / 0.45) 50%, transparent 65%);
+    transform: translateX(-110%);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    .btn--primary:hover::after {
+      transform: translateX(110%);
+      transition: transform 700ms var(--ease-out);
+    }
+  }
+
   .btn:active {
     transform: scale(0.98);
   }

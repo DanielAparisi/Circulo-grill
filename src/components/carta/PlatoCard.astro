@@ -18,7 +18,7 @@ const etiquetas = [
 ].filter(Boolean).slice(0, 2) as ('destacado' | 'novedad' | 'vegetariano' | 'picante')[];
 ---
 
-<article class:list={['plato', className]} id={`plato-${item.id}`}>
+<article class:list={['plato', className]} id={`plato-${item.id}`} data-reveal="suave">
   <div class="plato__linea">
     <h4 class="plato__nombre">
       {item.name}
@@ -72,7 +72,14 @@ const etiquetas = [
     top: -1px;
   }
 
+  @media (hover: hover) {
+    .plato:hover .plato__guia {
+      border-bottom-color: var(--naranja-grill);
+    }
+  }
+
   .plato__guia {
+    transition: border-color var(--dur-base) ease;
     flex: 1;
     min-width: var(--espacio-4);
     border-bottom: 2px dotted var(--borde-fuerte);

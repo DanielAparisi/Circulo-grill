@@ -5,14 +5,14 @@ import { locations } from '../../data/locations';
 
 <section class="locales section-padding" id="locales" aria-labelledby="locales-titulo">
   <div class="container">
-    <header class="locales__cabecera">
+    <header class="locales__cabecera" data-reveal>
       <p class="antetitulo">Dos casas, dos cartas, dos teléfonos</p>
       <h2 id="locales-titulo" class="rotulo-l">Dónde estamos</h2>
     </header>
 
     <div class="locales__grid">
-      {locations.map((loc) => (
-        <article class="local" id={`local-${loc.id}`} aria-labelledby={`local-${loc.id}-nombre`}>
+      {locations.map((loc, i) => (
+        <article data-reveal style={`--reveal-i: ${i}`} class="local" id={`local-${loc.id}`} aria-labelledby={`local-${loc.id}-nombre`}>
           <header class="local__cabecera">
             <span class="local__marca" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -16,7 +16,7 @@ const headingId = `cat-${category.slug}-titulo`;
   id={`cat-${category.slug}`}
   aria-labelledby={headingId}
 >
-  <header class="categoria__cabecera">
+  <header class="categoria__cabecera" data-reveal>
     <h3 id={headingId} class="seccion">{category.title}</h3>
     <span class="categoria__filete" aria-hidden="true"></span>
     {category.subtitle && <p class="categoria__entradilla">{category.subtitle}</p>}

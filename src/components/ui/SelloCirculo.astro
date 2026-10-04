@@ -59,6 +59,36 @@ const texto = 'CÍRCULO GRILL • BAR Y PARRILLA • LAS CASTILLAS • MECO • 
     position: relative;
     width: 100%;
     height: 100%;
+    animation:
+      sello-entrada 1100ms var(--ease-out) 200ms both,
+      sello-giro 90s linear 1300ms infinite;
+  }
+
+  @keyframes sello-entrada {
+    from { opacity: 0; transform: rotate(-40deg) scale(0.9); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes sello-giro {
+    to { transform: rotate(360deg); }
+  }
+
+  .sello__placa {
+    animation: sello-placa 700ms var(--ease-out) 450ms both;
+  }
+
+  @keyframes sello-placa {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .sello__disco-fondo {
+    animation: sello-flotar 7s ease-in-out infinite alternate;
+  }
+
+  @keyframes sello-flotar {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-10px, 12px); }
   }
 
   .sello__oro {

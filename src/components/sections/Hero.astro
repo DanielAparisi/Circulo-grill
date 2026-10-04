@@ -9,20 +9,22 @@ const castillas = locations[0];
 <section class="hero" aria-labelledby="hero-titulo">
   <div class="container hero__grid">
     <div class="hero__texto">
-      <p class="antetitulo">Bar y parrilla · Las Castillas y Meco</p>
+      <p class="antetitulo entrada" style="--i: 0">Bar y parrilla · Las Castillas y Meco</p>
 
+      <!-- Cada línea sube desde detrás de su máscara -->
       <h1 id="hero-titulo" class="hero__titulo">
-        La parrilla <span class="hero__titulo-linea">de Las Castillas</span>
+        <span class="hero__mascara"><span style="--i: 0">La parrilla</span></span>
+        <span class="hero__mascara hero__titulo-linea"><span style="--i: 1">de Las Castillas</span></span>
       </h1>
 
-      <span class="filete" aria-hidden="true"></span>
+      <span class="filete hero__filete" aria-hidden="true"></span>
 
-      <p class="hero__entradilla">
+      <p class="hero__entradilla entrada" style="--i: 3">
         Hamburguesas al carbón, costillar de seis horas y entrantes para el centro de la mesa.
         Vienes, te lo llevas o te lo llevamos.
       </p>
 
-      <div class="hero__acciones">
+      <div class="hero__acciones entrada" style="--i: 4">
         <Button href="#carta" variant="primary" size="lg">Ver la carta</Button>
         <Button href={`tel:${castillas.primaryPhone.tel}`} variant="secondary" size="lg">
           <svg slot="icon-start" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -33,14 +35,14 @@ const castillas = locations[0];
       </div>
     </div>
 
-    <div class="hero__sello">
+    <div class="hero__sello entrada" style="--i: 2">
       <SelloCirculo />
     </div>
   </div>
 
   <!-- Lo que se busca desde el móvil: dónde, cuándo y qué opinan -->
   <div class="container">
-    <dl class="hero__datos">
+    <dl class="hero__datos entrada" style="--i: 5">
       <div class="hero__dato">
         <dt class="etiqueta">Dónde</dt>
         <dd>
@@ -101,8 +103,30 @@ const castillas = locations[0];
   }
 
   .hero__titulo-linea {
-    display: block;
     color: var(--texto-ambar);
+  }
+
+  .hero__mascara {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.06em;
+    margin-bottom: -0.06em;
+  }
+
+  .hero__mascara > span {
+    display: block;
+    animation: entrada-linea 800ms var(--ease-out) both;
+    animation-delay: calc(var(--i) * 110ms + 60ms);
+  }
+
+  /* El filete se dibuja de izquierda a derecha cuando ha llegado el titular */
+  .hero__filete::before {
+    animation: entrada-subir 400ms var(--ease-out) 380ms both;
+  }
+
+  .hero__filete::after {
+    transform-origin: left;
+    animation: entrada-trazo 700ms var(--ease-out) 440ms both;
   }
 
   .hero__entradilla {
