@@ -1,0 +1,85 @@
+:root {
+  /* Superficies (AGENTS.md) */
+  --crema: #fffcf1;
+  --blanco: #ffffff;
+  --crema-hundido: #f7eedd;
+  --parrilla: #302a25;
+  --borde: #e8d6c6;
+  --borde-fuerte: #cbae91;
+
+  /* Marca (AGENTS.md) */
+  --naranja-grill: #e08a0e;
+  --oro-logo: #e7af5a;
+  --oro-carta: #f2b76b;
+  --naranja-destacado: #ffac54;
+  --melocoton: #f5c390;
+  --marron-brasa: #a87a62;
+  --gris-castillo: #4c4c4c;
+  --gris-muro: #b4b4b4;
+
+  /* Texto (AGENTS.md) */
+  --texto: #241f1b;
+  --texto-suave: #5c5248;
+  --texto-ambar: #7d4a0c;
+  --texto-sobre-oro: #241f1b;
+  --texto-sobre-parrilla: #fffcf1;
+
+  /* Estado */
+  --verde-huerta: #36692d;
+  --rojo-picante: #b3261e;
+
+  /* Espaciado — escala de 4px */
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 12px;
+  --espacio-4: 16px;
+  --espacio-5: 24px;
+  --espacio-6: 32px;
+  --espacio-7: 48px;
+  --espacio-8: 64px;
+
+  /* Radios */
+  --radio-s: 6px;
+  --radio-m: 12px;
+  --radio-l: 20px;
+  --radio-xl: 28px;
+  --radio-pill: 999px;
+
+  /* Sombras */
+  --sombra-carta: 0 1px 2px rgba(36, 31, 27, 0.08), 0 8px 20px rgba(36, 31, 27, 0.07);
+  --sombra-elevada: 0 12px 32px rgba(36, 31, 27, 0.14);
+
+  /* Tipografía */
+  --font-display: Montserrat, "Trebuchet MS", system-ui, sans-serif;
+  --font-texto: Inter, system-ui, -apple-system, sans-serif;
+
+  /* Layout y contenedores */
+  --container: 1140px;
+  --container-narrow: 800px;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2rem);
+  --section-y: clamp(3rem, 2rem + 3.5vw, 5rem);
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+}
+
+[data-theme="dark"] {
+  --crema: #1c1916;
+  --blanco: #27221e;
+  --crema-hundido: #15120f;
+  --parrilla: #0f0d0b;
+  --borde: #3e362e;
+  --borde-fuerte: #5a4e43;
+  --marron-brasa: #c89b82;
+  --texto: #f6efe4;
+  --texto-suave: #c3b8aa;
+  --texto-ambar: #f0c07a;
+  --verde-huerta: #8cc47c;
+  --rojo-picante: #ff8a7a;
+  --sombra-carta: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.45);
+  --sombra-elevada: 0 12px 32px rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,131 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'hero';
+  showTagline?: boolean;
+  class?: string;
+  isLink?: boolean;
+}
+
+const {
+  size = 'md',
+  showTagline = false,
+  class: className,
+  isLink = true,
+} = Astro.props;
+
+const Tag = isLink ? 'a' : 'div';
+---
+
+<Tag
+  href={isLink ? '/' : undefined}
+  class:list={['logo-plaque', `logo-plaque--${size}`, className]}
+  aria-label="Círculo Grill — Inicio"
+>
+  <div class="logo-plaque__inner">
+    <!-- Imagen del logo real de Círculo Grill -->
+    <img
+      src="/logo-raw.png"
+      alt="Escudo de Círculo Grill: castillo almenado y hamburguesa a la brasa"
+      class="logo-plaque__image"
+      width="187"
+      height="187"
+      loading="eager"
+    />
+  </div>
+
+  {showTagline && (
+    <div class="logo-plaque__text">
+      <span class="logo-plaque__brand">CÍRCULO GRILL</span>
+      <span class="logo-plaque__sub">Las Castillas · Meco</span>
+    </div>
+  )}
+</Tag>
+
+<style>
+  .logo-plaque {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Placa redondeada según normas de AGENTS.md 7.2 */
+  .logo-plaque__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blanco);
+    border-radius: var(--radio-xl);
+    border: 1px solid var(--borde);
+    box-shadow: var(--sombra-carta);
+    overflow: hidden;
+    transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  }
+
+  @media (hover: hover) {
+    .logo-plaque:hover .logo-plaque__inner {
+      transform: scale(1.02);
+      box-shadow: var(--sombra-elevada);
+      border-color: var(--oro-carta);
+    }
+  }
+
+  .logo-plaque__image {
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Tamaños de la placa */
+  .logo-plaque--sm .logo-plaque__inner {
+    width: 44px;
+    height: 44px;
+    padding: 3px;
+    border-radius: var(--radio-m);
+  }
+
+  .logo-plaque--md .logo-plaque__inner {
+    width: 60px;
+    height: 60px;
+    padding: var(--espacio-1);
+    border-radius: var(--radio-l);
+  }
+
+  .logo-plaque--lg .logo-plaque__inner {
+    width: 88px;
+    height: 88px;
+    padding: var(--espacio-2);
+    border-radius: var(--radio-xl);
+  }
+
+  .logo-plaque--hero .logo-plaque__inner {
+    width: clamp(100px, 14vw, 130px);
+    height: clamp(100px, 14vw, 130px);
+    padding: var(--espacio-3);
+    border-radius: var(--radio-xl);
+    box-shadow: var(--sombra-elevada);
+  }
+
+  .logo-plaque__text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .logo-plaque__brand {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    color: var(--texto);
+  }
+
+  .logo-plaque__sub {
+    font-family: var(--font-texto);
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+</style>

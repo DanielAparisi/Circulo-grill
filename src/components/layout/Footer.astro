@@ -1,0 +1,185 @@
+---
+import Logo from '../ui/Logo.astro';
+---
+
+<footer class="site-footer" id="contacto">
+  <div class="container footer-container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <Logo size="md" showTagline={false} />
+        <h2 class="footer-brand__name rotulo-m">CÍRCULO GRILL</h2>
+        <p class="cuerpo-s footer-brand__desc">
+          Bar y parrilla tradicional americana en Las Castillas (Torrejón del Rey) y Meco.
+          Carnes a la brasa, hamburguesas, costillas y raciones caseras.
+        </p>
+        <a
+          href="https://www.instagram.com/circulogrill"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="instagram-link"
+          aria-label="Seguir a Círculo Grill en Instagram: @circulogrill"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          @circulogrill
+        </a>
+      </div>
+
+      <div class="footer-locations">
+        <div class="footer-col">
+          <h3 class="footer-col__title seccion">Las Castillas</h3>
+          <p class="cuerpo-s">C. Castillo Simancas, 3<br>19174 Torrejón del Rey (Guadalajara)</p>
+          <p class="cuerpo-s">
+            <strong>Teléfonos:</strong><br>
+            <a href="tel:+34949327451">949 32 74 51</a> · <a href="tel:+34640529409">640 529 409</a>
+          </p>
+          <p class="cuerpo-s">
+            <strong>Horario:</strong><br>
+            Mediodía: 13:00 – 16:30<br>
+            Cenas: 19:00 – 23:30<br>
+            <span class="sub-text">Martes a Domingo (Lunes descanso)</span>
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-col__title seccion">Círculo Grill & Go</h3>
+          <p class="cuerpo-s">C.C. Belvalle, Local 12<br>28880 Meco (Madrid)</p>
+          <p class="cuerpo-s">
+            <strong>Teléfono para pedidos:</strong><br>
+            <a href="tel:+34640254465">640 25 44 65</a>
+          </p>
+          <p class="cuerpo-s">
+            <strong>Horario:</strong><br>
+            L, X, J, V, S y D · 20:00 – 23:30<br>
+            <span class="sub-text">Martes cerrado</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="cuerpo-s footer-copy">
+        © {new Date().getFullYear()} Círculo Grill. Todos los derechos reservados.
+      </p>
+      <div class="footer-legal-links">
+        <span class="cuerpo-s">Bufé libre · Terraza · Take Away & Delivery</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--parrilla);
+    color: var(--texto-sobre-parrilla);
+    padding-top: var(--espacio-7);
+    padding-bottom: var(--espacio-6);
+    margin-top: auto;
+  }
+
+  .site-footer a {
+    color: var(--oro-carta);
+    text-decoration: underline;
+  }
+
+  .site-footer a:hover {
+    color: var(--blanco);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--espacio-6);
+    padding-bottom: var(--espacio-6);
+    border-bottom: 1px solid rgba(255, 252, 241, 0.15);
+  }
+
+  @media (min-width: 840px) {
+    .footer-top {
+      grid-template-columns: 1.2fr 2fr;
+      gap: var(--espacio-8);
+    }
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espacio-2);
+  }
+
+  .footer-brand__name {
+    color: var(--texto-sobre-parrilla);
+    margin: var(--espacio-2) 0 0 0;
+    font-size: 1.375rem;
+  }
+
+  .footer-brand__desc {
+    color: #c3b8aa;
+    max-width: 38ch;
+    margin-bottom: var(--espacio-2);
+  }
+
+  .instagram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    padding: var(--espacio-2) var(--espacio-3);
+    background: rgba(255, 252, 241, 0.08);
+    border-radius: var(--radio-pill);
+    text-decoration: none !important;
+  }
+
+  .instagram-link:hover {
+    background: rgba(255, 252, 241, 0.15);
+  }
+
+  .footer-locations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--espacio-5);
+  }
+
+  .footer-col__title {
+    color: var(--oro-logo);
+    font-size: 1.125rem;
+    margin-bottom: var(--espacio-3);
+  }
+
+  .footer-col p {
+    color: #c3b8aa;
+    margin-bottom: var(--espacio-3);
+  }
+
+  .footer-col strong {
+    color: var(--texto-sobre-parrilla);
+  }
+
+  .sub-text {
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--espacio-3);
+    padding-top: var(--espacio-5);
+  }
+
+  .footer-copy {
+    color: #9f9486;
+    margin: 0;
+  }
+
+  .footer-legal-links {
+    color: #c3b8aa;
+  }
+</style>

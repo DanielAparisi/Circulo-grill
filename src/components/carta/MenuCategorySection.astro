@@ -1,0 +1,40 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import PlatoCard from './PlatoCard.astro';
+import type { MenuCategory } from '../../data/menu';
+
+interface Props {
+  category: MenuCategory;
+  class?: string;
+}
+
+const { category, class: className } = Astro.props;
+---
+
+<section class:list={['menu-category-section', className]} id={`cat-${category.slug}`}>
+  <SectionHeading
+    title={category.title}
+    subtitle={category.subtitle}
+    variant="long"
+  />
+
+  <div class="menu-category-section__list">
+    {category.items.map((item) => (
+      <PlatoCard item={item} />
+    ))}
+  </div>
+</section>
+
+<style>
+  .menu-category-section {
+    padding-top: var(--espacio-5);
+    padding-bottom: var(--espacio-5);
+    scroll-margin-top: 100px;
+  }
+
+  .menu-category-section__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+  }
+</style>

@@ -1,0 +1,201 @@
+/* Resets y base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-texto);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--texto);
+  background-color: var(--crema);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--crema);
+  color: var(--texto);
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tipografía de marca (AGENTS.md) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--texto);
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--espacio-3);
+}
+
+/* Clases tipográficas de la marca */
+.rotulo-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 1.8rem + 2vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.rotulo-l {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.35rem + 1.2vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.rotulo-m {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.seccion {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.plato {
+  font-family: var(--font-texto);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--texto);
+}
+
+.precio {
+  font-family: var(--font-texto);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--texto-ambar);
+}
+
+.descripcion {
+  font-family: var(--font-texto);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--texto-suave);
+}
+
+.cuerpo {
+  font-family: var(--font-texto);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--texto);
+}
+
+.cuerpo-s {
+  font-family: var(--font-texto);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--texto-suave);
+}
+
+.etiqueta {
+  font-family: var(--font-texto);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.boton-texto {
+  font-family: var(--font-texto);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Enlaces y foco accesible */
+a {
+  color: var(--texto-ambar);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) ease;
+}
+
+a:hover {
+  color: var(--texto);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--texto-ambar);
+  outline-offset: 2px;
+}
+
+/* Layout y contenedores */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.section-padding {
+  padding-top: var(--section-y);
+  padding-bottom: var(--section-y);
+}
+
+/* Enlace accesible para saltar al contenido */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--espacio-4);
+  background: var(--naranja-grill);
+  color: var(--texto-sobre-oro);
+  padding: var(--espacio-2) var(--espacio-4);
+  border-radius: var(--radio-m);
+  font-weight: 700;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top var(--dur-fast) ease;
+}
+
+.skip-link:focus {
+  top: var(--espacio-4);
+}

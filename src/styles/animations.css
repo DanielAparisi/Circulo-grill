@@ -1,0 +1,43 @@
+/* Soporte para accesibilidad y movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Revelado suave al scroll (progressive enhancement) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--reveal-i, 0) * 60ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Fallback si JavaScript está desactivado */
+html:not(.js) [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Micro-interacciones sutiles */
+.hover-lift {
+  transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+
+@media (hover: hover) {
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-elevada);
+  }
+}

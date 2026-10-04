@@ -1,0 +1,244 @@
+---
+import Logo from '../ui/Logo.astro';
+import Button from '../ui/Button.astro';
+---
+
+<header class="site-header" id="site-header">
+  <div class="container header-container">
+    <div class="header-logo-side">
+      <Logo size="sm" showTagline={true} />
+    </div>
+
+    <!-- Navegación escritorio -->
+    <nav class="desktop-nav" aria-label="Navegación principal">
+      <ul class="nav-links">
+        <li><a href="#carta" class="nav-link">La Carta</a></li>
+        <li><a href="#locales" class="nav-link">Nuestros Locales</a></li>
+        <li><a href="tel:+34949327451" class="nav-link nav-link--phone">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          949 32 74 51
+        </a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <Button href="#carta" variant="primary" size="sm" class="header-order-btn">
+        Pedir ahora
+      </Button>
+
+      <!-- Botón menú móvil -->
+      <button
+        type="button"
+        class="mobile-menu-toggle"
+        id="mobile-menu-toggle"
+        aria-label="Abrir menú de navegación"
+        aria-expanded="false"
+        aria-controls="mobile-nav-drawer"
+      >
+        <svg class="icon-open" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg class="icon-close" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Drawer móvil accesible -->
+  <div class="mobile-nav-drawer" id="mobile-nav-drawer" aria-hidden="true">
+    <nav class="mobile-nav" aria-label="Navegación móvil">
+      <ul class="mobile-nav-links">
+        <li><a href="#carta" class="mobile-nav-link">La Carta</a></li>
+        <li><a href="#locales" class="mobile-nav-link">Nuestros Locales</a></li>
+        <li><a href="tel:+34949327451" class="mobile-nav-link">Llamar a Las Castillas (949 32 74 51)</a></li>
+        <li><a href="tel:+34640254465" class="mobile-nav-link">Llamar a Meco (640 25 44 65)</a></li>
+      </ul>
+      <div class="mobile-drawer-cta">
+        <Button href="#carta" variant="primary" size="md" class="mobile-cta-btn">
+          Ver la carta
+        </Button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgba(255, 252, 241, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--borde);
+    transition: background-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+
+  .header-logo-side {
+    display: flex;
+    align-items: center;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .desktop-nav {
+      display: block;
+    }
+  }
+
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-5);
+  }
+
+  .nav-link {
+    font-family: var(--font-texto);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--texto);
+    text-decoration: none;
+    padding: var(--espacio-1) var(--espacio-2);
+    border-radius: var(--radio-s);
+    transition: color var(--dur-fast) ease;
+  }
+
+  .nav-link:hover {
+    color: var(--texto-ambar);
+  }
+
+  .nav-link--phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--texto-ambar);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-m);
+    color: var(--texto);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu-toggle {
+      display: none;
+    }
+  }
+
+  .mobile-menu-toggle .icon-close {
+    display: none;
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] .icon-open {
+    display: none;
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] .icon-close {
+    display: block;
+  }
+
+  /* Drawer móvil */
+  .mobile-nav-drawer {
+    display: none;
+    background-color: var(--blanco);
+    border-bottom: 1px solid var(--borde);
+    padding: var(--espacio-4) var(--gutter) var(--espacio-6) var(--gutter);
+  }
+
+  .mobile-nav-drawer.is-open {
+    display: block;
+  }
+
+  .mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--espacio-4) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: var(--espacio-2) 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--texto);
+    text-decoration: none;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--texto-ambar);
+  }
+
+  .mobile-cta-btn {
+    width: 100%;
+  }
+</style>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const drawer = document.getElementById('mobile-nav-drawer');
+  const links = drawer?.querySelectorAll('a');
+
+  if (toggleBtn && drawer) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      drawer.classList.toggle('is-open', !isExpanded);
+      drawer.setAttribute('aria-hidden', String(isExpanded));
+    });
+
+    links?.forEach((link) => {
+      link.addEventListener('click', () => {
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden', 'true');
+        toggleBtn.focus();
+      }
+    });
+  }
+</script>

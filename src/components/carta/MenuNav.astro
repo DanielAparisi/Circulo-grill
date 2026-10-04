@@ -1,0 +1,106 @@
+---
+import type { MenuCategory } from '../../data/menu';
+
+interface Props {
+  categories: MenuCategory[];
+}
+
+const { categories } = Astro.props;
+---
+
+<nav class="menu-nav" aria-label="Categorías de la carta">
+  <div class="menu-nav__scroll">
+    {categories.map((cat, i) => (
+      <a
+        href={`#cat-${cat.slug}`}
+        class:list={['menu-nav__pill', i === 0 && 'is-active']}
+        data-category-target={cat.slug}
+      >
+        {cat.title.split(' ')[0]}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .menu-nav {
+    position: sticky;
+    top: 68px;
+    z-index: 40;
+    background: rgba(255, 252, 241, 0.94);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--borde);
+    border-bottom: 1px solid var(--borde);
+    padding: var(--espacio-2) 0;
+    margin-bottom: var(--espacio-6);
+  }
+
+  .menu-nav__scroll {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 var(--gutter);
+    max-width: var(--container);
+    margin: 0 auto;
+  }
+
+  .menu-nav__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu-nav__pill {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--espacio-2) var(--espacio-4);
+    border-radius: var(--radio-pill);
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    color: var(--texto);
+    font-family: var(--font-texto);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all var(--dur-fast) ease;
+  }
+
+  .menu-nav__pill:hover,
+  .menu-nav__pill.is-active {
+    background-color: var(--naranja-grill);
+    color: var(--texto-sobre-oro);
+    border-color: var(--naranja-grill);
+  }
+</style>
+
+<script>
+  // Destacar pestaña activa según scroll
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.menu-nav__pill');
+  const sections = document.querySelectorAll<HTMLElement>('.menu-category-section');
+
+  const onScroll = () => {
+    let currentId = '';
+    const scrollPos = window.scrollY + 140;
+
+    sections.forEach((sec) => {
+      if (sec.offsetTop <= scrollPos) {
+        currentId = sec.id;
+      }
+    });
+
+    navLinks.forEach((link) => {
+      const href = link.getAttribute('href')?.replace('#', '');
+      if (href === currentId) {
+        link.classList.add('is-active');
+      } else {
+        link.classList.remove('is-active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

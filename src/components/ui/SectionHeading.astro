@@ -1,0 +1,104 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  variant?: 'long' | 'short';
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  badge,
+  variant = 'long',
+  align = 'left',
+  class: className,
+} = Astro.props;
+---
+
+<header class:list={['section-heading', `section-heading--${align}`, className]}>
+  {badge && <span class="section-heading__badge">{badge}</span>}
+  <h2 class="section-heading__title">{title}</h2>
+  <div class:list={['section-heading__line-wrap', `section-heading__line-wrap--${variant}`]} aria-hidden="true">
+    <span class="section-heading__dot"></span>
+    <span class="section-heading__line"></span>
+  </div>
+  {subtitle && <p class="section-heading__subtitle">{subtitle}</p>}
+</header>
+
+<style>
+  .section-heading {
+    margin-bottom: var(--espacio-5);
+  }
+
+  .section-heading--center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-heading__badge {
+    display: inline-block;
+    font-family: var(--font-texto);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--texto-ambar);
+    margin-bottom: var(--espacio-2);
+  }
+
+  .section-heading__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    line-height: 1.25;
+    text-transform: uppercase;
+    color: var(--texto);
+    margin: 0;
+  }
+
+  /* Filete con punto de naranja-grill y línea de 3px en oro-carta con radio-pill (AGENTS.md) */
+  .section-heading__line-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    margin-top: var(--espacio-2);
+    margin-bottom: var(--espacio-2);
+  }
+
+  .section-heading__line-wrap--long {
+    width: 100%;
+  }
+
+  .section-heading__line-wrap--short {
+    width: 80px;
+  }
+
+  .section-heading__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radio-pill);
+    background-color: var(--naranja-grill);
+    flex-shrink: 0;
+  }
+
+  .section-heading__line {
+    flex-grow: 1;
+    height: 3px;
+    border-radius: var(--radio-pill);
+    background-color: var(--oro-carta);
+  }
+
+  .section-heading__subtitle {
+    font-family: var(--font-texto);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--texto-suave);
+    margin: var(--espacio-1) 0 0 0;
+  }
+</style>

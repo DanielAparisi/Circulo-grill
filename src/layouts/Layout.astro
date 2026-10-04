@@ -1,23 +1,142 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/animations.css';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Círculo Grill — Bar y Parrilla Tradicional Americana en Las Castillas',
+  description = 'Círculo Grill de Las Castillas (Torrejón del Rey) y Meco. Hamburguesas a la brasa, costillas, entrantes caseros, bufé libre, terraza y servicio take away y delivery.',
+} = Astro.props;
+
+const restaurantSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  'name': 'Círculo Grill de Las Castillas',
+  'image': '/logo-raw.png',
+  'telephone': '+34949327451',
+  'servesCuisine': ['Americana', 'Barbacoa', 'Hamburguesas'],
+  'priceRange': '10-20 €',
+  'address': {
+    '@type': 'PostalAddress',
+    'streetAddress': 'C. Castillo Simancas, 3',
+    'addressLocality': 'Torrejón del Rey',
+    'addressRegion': 'Guadalajara',
+    'postalCode': '19174',
+    'addressCountry': 'ES',
+  },
+  'geo': {
+    '@type': 'GeoCoordinates',
+    'latitude': '40.6406',
+    'longitude': '-3.3364',
+  },
+  'openingHoursSpecification': [
+    {
+      '@type': 'OpeningHoursSpecification',
+      'dayOfWeek': ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      'opens': '13:00',
+      'closes': '16:30',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      'dayOfWeek': ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      'opens': '19:00',
+      'closes': '23:30',
+    },
+  ],
+  'aggregateRating': {
+    '@type': 'AggregateRating',
+    'ratingValue': '4.5',
+    'reviewCount': '307',
+  },
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fffcf1" />
+
+    <!-- Open Graph / Redes Sociales -->
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/logo-raw.png" />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Google Fonts: Montserrat (700, 800) e Inter (400, 600, 700, 800) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap"
+    />
+
+    <!-- Datos estructurados JSON-LD Schema.org Restaurant -->
+    <script type="application/ld+json" set:html={JSON.stringify(restaurantSchema)} />
+  </head>
+  <body>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+
+    <Header />
+
+    <main id="contenido-principal">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Script ligero para animación de scroll progresivo -->
+    <script>
+      document.documentElement.classList.add('js');
+      const setupReveal = () => {
+        if ('IntersectionObserver' in window) {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  e.target.classList.add('is-visible');
+                  io.unobserve(e.target);
+                }
+              });
+            },
+            { rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
+          );
+
+          document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => {
+            io.observe(el);
+          });
+        } else {
+          // Fallback para navegadores antiguos
+          document.querySelectorAll('[data-reveal]').forEach((el) => {
+            el.classList.add('is-visible');
+          });
+        }
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupReveal);
+      } else {
+        setupReveal();
+      }
+    </script>
+  </body>
+</html>

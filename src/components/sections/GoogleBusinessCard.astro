@@ -1,0 +1,386 @@
+---
+import Button from '../ui/Button.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<section class:list={['google-card-section', className]} aria-label="Información y ficha verificada en Google Maps">
+  <div class="google-card">
+    <div class="google-card__top">
+      <div class="google-card__badge-row">
+        <span class="google-card__google-pill">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          Google Business
+        </span>
+        <span class="google-card__status">
+          <span class="status-indicator"></span> Abierto · Cierre mediodía: 16:30 · Cenas: 19:00
+        </span>
+      </div>
+
+      <h2 class="google-card__name">EL CÍRCULO GRILL DE LAS CASTILLAS</h2>
+
+      <div class="google-card__rating-row">
+        <div class="google-card__stars-wrap">
+          <span class="google-card__score">4,5</span>
+          <div class="google-card__stars" aria-label="4,5 de 5 estrellas">
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star half">★</span>
+          </div>
+        </div>
+        <span class="google-card__reviews-count">(307 reseñas)</span>
+        <span class="google-card__dot-sep">·</span>
+        <span class="google-card__price-cat">10-20 € · Restaurante de comida tradicional americana</span>
+      </div>
+    </div>
+
+    <!-- Píldoras de servicios reales -->
+    <div class="google-card__services">
+      <span class="service-pill">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        Bufé libre
+      </span>
+      <span class="service-pill">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M20 18h2"/><path d="M2 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 22 4-10 4 10"/></svg>
+        Terraza
+      </span>
+      <span class="service-pill">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        Platos veganos y vegetarianos
+      </span>
+      <span class="service-pill">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Take away & Delivery
+      </span>
+    </div>
+
+    <!-- Fila de detalles: Dirección, Trayecto y Teléfono -->
+    <div class="google-card__details">
+      <div class="google-card__detail-item">
+        <svg class="detail-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <div>
+          <strong>Dirección:</strong>
+          <span>C. Castillo Simancas, 3, 19174 Torrejón del Rey, Guadalajara</span>
+          <span class="badge-trayecto">Trayecto aprox: 20 min</span>
+        </div>
+      </div>
+
+      <div class="google-card__detail-item">
+        <svg class="detail-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <div>
+          <strong>Teléfonos para pedidos y reservas:</strong>
+          <div class="phones-row">
+            <a href="tel:+34949327451" class="phone-link">949 32 74 51</a>
+            <span class="sep">/</span>
+            <a href="tel:+34640529409" class="phone-link">640 529 409</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de Acción Directa (exactos según petición del usuario) -->
+    <div class="google-card__actions">
+      <Button
+        href="https://maps.google.com/?q=El+Circulo+Grill+de+las+Castillas+Castillo+Simancas+3+Torrejon+del+Rey"
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="primary"
+        size="md"
+      >
+        <svg slot="icon-start" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+        </svg>
+        Cómo llegar
+      </Button>
+
+      <Button
+        href="tel:+34949327451"
+        variant="secondary"
+        size="md"
+      >
+        <svg slot="icon-start" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        Pedir para llevar
+      </Button>
+
+      <Button
+        href="https://www.ubereats.com/es/store/el-circulo-grill-de-las-castillas/94f71a06-b333-4df4-a8ae-8b38a7c29352"
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="secondary"
+        size="md"
+      >
+        <svg slot="icon-start" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+        Pedir a domicilio
+      </Button>
+
+      <Button
+        href="https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4"
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="outline"
+        size="md"
+      >
+        <svg slot="icon-start" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        Escribir una reseña
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .google-card-section {
+    margin-top: calc(-1 * var(--espacio-7));
+    position: relative;
+    z-index: 20;
+    padding-bottom: var(--espacio-6);
+  }
+
+  .google-card {
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-l);
+    box-shadow: var(--sombra-elevada);
+    padding: clamp(var(--espacio-4), 3vw, var(--espacio-6));
+    max-width: var(--container);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .google-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--naranja-grill), var(--oro-logo), var(--oro-carta));
+  }
+
+  .google-card__top {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+    margin-bottom: var(--espacio-4);
+  }
+
+  .google-card__badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--espacio-2);
+  }
+
+  .google-card__google-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--crema-hundido);
+    padding: 3px 10px;
+    border-radius: var(--radio-pill);
+    font-family: var(--font-texto);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--texto-suave);
+  }
+
+  .google-card__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-texto);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--verde-huerta);
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--verde-huerta);
+    display: inline-block;
+  }
+
+  .google-card__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.1rem + 1vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--texto);
+    margin: var(--espacio-1) 0 0 0;
+  }
+
+  .google-card__rating-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--espacio-2);
+    font-family: var(--font-texto);
+    font-size: 0.9375rem;
+    color: var(--texto-suave);
+  }
+
+  .google-card__stars-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .google-card__score {
+    font-weight: 800;
+    color: var(--texto);
+    font-size: 1.0625rem;
+  }
+
+  .google-card__stars {
+    color: #e7711b;
+    font-size: 1.125rem;
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  .google-card__reviews-count {
+    color: var(--texto-ambar);
+    font-weight: 600;
+  }
+
+  .google-card__dot-sep {
+    color: var(--borde-fuerte);
+  }
+
+  .google-card__price-cat {
+    color: var(--texto-suave);
+    font-size: 0.875rem;
+  }
+
+  /* Servicios */
+  .google-card__services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-2);
+    padding: var(--espacio-3) 0;
+    border-top: 1px solid var(--borde);
+    border-bottom: 1px solid var(--borde);
+    margin-bottom: var(--espacio-4);
+  }
+
+  .service-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--crema);
+    border: 1px solid var(--borde);
+    padding: 4px 12px;
+    border-radius: var(--radio-pill);
+    font-family: var(--font-texto);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--texto);
+  }
+
+  .service-pill svg {
+    color: var(--naranja-grill);
+  }
+
+  /* Fila de detalles */
+  .google-card__details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--espacio-4);
+    margin-bottom: var(--espacio-5);
+  }
+
+  .google-card__detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espacio-3);
+    font-family: var(--font-texto);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--texto);
+  }
+
+  .detail-icon {
+    color: var(--naranja-grill);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .google-card__detail-item strong {
+    display: block;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--texto-suave);
+    margin-bottom: 2px;
+  }
+
+  .badge-trayecto {
+    display: inline-block;
+    background-color: var(--crema-hundido);
+    padding: 2px 8px;
+    border-radius: var(--radio-s);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--texto-ambar);
+    margin-top: 4px;
+    margin-left: 6px;
+  }
+
+  .phones-row {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    margin-top: 2px;
+  }
+
+  .phone-link {
+    font-family: var(--font-texto);
+    font-weight: 800;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--texto-ambar);
+    text-decoration: none;
+  }
+
+  .phone-link:hover {
+    text-decoration: underline;
+  }
+
+  .sep {
+    color: var(--borde-fuerte);
+  }
+
+  /* Botones de acción */
+  .google-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espacio-3);
+  }
+</style>

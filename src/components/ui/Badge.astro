@@ -1,0 +1,100 @@
+---
+interface Props {
+  variant: 'vegetariano' | 'picante' | 'novedad' | 'promo' | 'destacado';
+  text?: string;
+  class?: string;
+}
+
+const {
+  variant,
+  text,
+  class: className,
+} = Astro.props;
+
+const defaultTexts: Record<string, string> = {
+  vegetariano: 'Vegetariano',
+  picante: 'Picante',
+  novedad: 'Nuevo',
+  promo: 'Promoción',
+  destacado: 'De la casa',
+};
+
+const labelText = text || defaultTexts[variant];
+---
+
+<span class:list={['badge', `badge--${variant}`, className]}>
+  {variant === 'vegetariano' && (
+    <svg class="badge__icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+    </svg>
+  )}
+  {variant === 'picante' && (
+    <svg class="badge__icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M18 8c0 4.5-3.5 10-9 13C6 19 4 16 4 12c0-4.5 3-7 7-9 1 1 2 2.5 2 5"/>
+      <path d="M13 3c2-1 5-1 7 1"/>
+    </svg>
+  )}
+  {variant === 'destacado' && (
+    <svg class="badge__icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+  )}
+  <span>{labelText}</span>
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: var(--radio-s);
+    font-family: var(--font-texto);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .badge__icon {
+    flex-shrink: 0;
+  }
+
+  /* Vegetariano: borde y texto verde-huerta */
+  .badge--vegetariano {
+    background-color: rgba(54, 105, 45, 0.08);
+    border: 1px solid var(--verde-huerta);
+    color: var(--verde-huerta);
+  }
+
+  /* Picante: borde y texto rojo-picante */
+  .badge--picante {
+    background-color: rgba(179, 38, 30, 0.08);
+    border: 1px solid var(--rojo-picante);
+    color: var(--rojo-picante);
+  }
+
+  /* Novedad: fondo oro-carta, tinta texto-sobre-oro */
+  .badge--novedad {
+    background-color: var(--oro-carta);
+    color: var(--texto-sobre-oro);
+    border: 1px solid transparent;
+  }
+
+  /* Promoción: fondo naranja-destacado, tinta texto-sobre-oro */
+  .badge--promo {
+    background-color: var(--naranja-destacado);
+    color: var(--texto-sobre-oro);
+    border: 1px solid transparent;
+  }
+
+  /* Destacado / Especialidad */
+  .badge--destacado {
+    background-color: var(--oro-logo);
+    color: var(--texto-sobre-oro);
+    border: 1px solid transparent;
+  }
+</style>

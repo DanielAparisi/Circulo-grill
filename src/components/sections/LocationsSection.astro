@@ -1,0 +1,307 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import { locations } from '../../data/locations';
+---
+
+<section class="locations-section section-padding" id="locales" aria-label="Nuestros locales">
+  <div class="container">
+    <SectionHeading
+      badge="DÓNDE ESTAMOS"
+      title="NUESTROS LOCALES"
+      subtitle="Dos ubicaciones pensadas para ti: sala y terraza en Las Castillas, y Círculo Grill & Go en Meco."
+      align="center"
+      variant="short"
+    />
+
+    <div class="locations-grid">
+      {locations.map((loc) => (
+        <article class="tarjeta-local" id={`local-${loc.id}`}>
+          <div class="tarjeta-local__header">
+            <div class="tarjeta-local__icon-box" aria-hidden="true">
+              <!-- Icono del castillo almenado de Las Castillas -->
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 21V8l2-2v3h2V6l2-2 2 2v3h2V6l2-2 2 2v3h2l2 2v13H4Z"/>
+                <path d="M10 21v-4a2 2 0 0 1 4 0v4"/>
+              </svg>
+            </div>
+            <div class="tarjeta-local__title-group">
+              <span class="tarjeta-local__badge etiqueta">{loc.badge}</span>
+              <h3 class="tarjeta-local__name rotulo-m">{loc.name}</h3>
+            </div>
+          </div>
+
+          <p class="tarjeta-local__tagline cuerpo-s">{loc.tagline}</p>
+
+          <div class="tarjeta-local__data">
+            <!-- Ubicación -->
+            <div class="data-row">
+              <div class="data-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div class="data-content">
+                <strong>Ubicación:</strong>
+                <span>{loc.address}</span>
+                <span>{loc.postalCode} {loc.city} ({loc.province})</span>
+              </div>
+            </div>
+
+            <!-- Horario -->
+            <div class="data-row">
+              <div class="data-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="data-content">
+                <strong>Horario de cocina:</strong>
+                <span>{loc.hours.summary}</span>
+                <ul class="hours-list">
+                  {loc.hours.details.map((d) => (
+                    <li><span class="days">{d.days}:</span> {d.hours}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <!-- Teléfono directo clicable -->
+            <div class="data-row">
+              <div class="data-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+              <div class="data-content">
+                <strong>Teléfono para pedidos / contacto:</strong>
+                <div class="phones-list">
+                  {loc.phones.map((p, index) => (
+                    <a href={`tel:${p.tel}`} class="tel-link">
+                      {p.display}
+                      {index < loc.phones.length - 1 && <span class="phone-sep">/</span>}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicios del local -->
+          <div class="tarjeta-local__services">
+            {loc.services.map((srv) => (
+              <span class="loc-srv-chip">{srv}</span>
+            ))}
+          </div>
+
+          <!-- Acciones de la tarjeta -->
+          <div class="tarjeta-local__actions">
+            {loc.hasDelivery ? (
+              <Button href={loc.orderOnlineUrl || `tel:${loc.primaryPhone.tel}`} variant="primary" size="md">
+                <svg slot="icon-start" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+                Pedir a domicilio
+              </Button>
+            ) : (
+              <Button href="#carta" variant="primary" size="md">
+                Ver la carta
+              </Button>
+            )}
+
+            <Button href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" variant="secondary" size="md">
+              <svg slot="icon-start" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+              </svg>
+              Cómo llegar
+            </Button>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .locations-section {
+    background-color: var(--crema-hundido);
+    border-top: 1px solid var(--borde);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--espacio-6);
+    margin-top: var(--espacio-5);
+  }
+
+  /* TarjetaLocal (AGENTS.md 10.5): blanco, radio-l, sombra-carta, relleno espacio-5 */
+  .tarjeta-local {
+    background-color: var(--blanco);
+    border-radius: var(--radio-l);
+    border: 1px solid var(--borde);
+    box-shadow: var(--sombra-carta);
+    padding: var(--espacio-5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 280px;
+    transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  }
+
+  @media (hover: hover) {
+    .tarjeta-local:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--sombra-elevada);
+      border-color: var(--borde-fuerte);
+    }
+  }
+
+  .tarjeta-local__header {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    margin-bottom: var(--espacio-3);
+  }
+
+  /* Marca cuadrada de oro-logo con radio-m e icono (AGENTS.md) */
+  .tarjeta-local__icon-box {
+    width: 48px;
+    height: 48px;
+    background-color: var(--oro-logo);
+    color: var(--parrilla);
+    border-radius: var(--radio-m);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .tarjeta-local__title-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tarjeta-local__badge {
+    color: var(--texto-ambar);
+    font-size: 0.6875rem;
+    letter-spacing: 1px;
+  }
+
+  .tarjeta-local__name {
+    font-size: 1.1875rem;
+    margin: 0;
+    line-height: 1.25;
+    color: var(--texto);
+  }
+
+  .tarjeta-local__tagline {
+    color: var(--texto-suave);
+    margin-bottom: var(--espacio-4);
+  }
+
+  .tarjeta-local__data {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-3);
+    padding: var(--espacio-3) 0;
+    border-top: 1px solid var(--borde);
+    border-bottom: 1px solid var(--borde);
+    margin-bottom: var(--espacio-4);
+  }
+
+  .data-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espacio-3);
+    font-family: var(--font-texto);
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .data-icon {
+    color: var(--naranja-grill);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .data-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .data-content strong {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--texto-suave);
+    margin-bottom: 2px;
+  }
+
+  .hours-list {
+    list-style: none;
+    padding: 0;
+    margin: 2px 0 0 0;
+  }
+
+  .hours-list li {
+    font-size: 0.8125rem;
+    color: var(--texto);
+  }
+
+  .hours-list .days {
+    font-weight: 600;
+  }
+
+  .phones-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--espacio-1);
+    margin-top: 2px;
+  }
+
+  .tel-link {
+    font-family: var(--font-texto);
+    font-weight: 800;
+    font-size: 1.0625rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--texto-ambar);
+    text-decoration: none;
+  }
+
+  .tel-link:hover {
+    text-decoration: underline;
+  }
+
+  .phone-sep {
+    color: var(--borde-fuerte);
+    margin-left: 4px;
+    margin-right: 2px;
+  }
+
+  .tarjeta-local__services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--espacio-5);
+  }
+
+  .loc-srv-chip {
+    background-color: var(--crema-hundido);
+    padding: 2px 8px;
+    border-radius: var(--radio-s);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--texto-suave);
+  }
+
+  .tarjeta-local__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-2);
+  }
+</style>

@@ -1,0 +1,151 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'dark' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class:list={[
+    'btn',
+    `btn--${variant}`,
+    `btn--${size}`,
+    className,
+  ]}
+  {...rest}
+>
+  <slot name="icon-start" />
+  <span class="btn__text"><slot /></span>
+  <slot name="icon-end" />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-2);
+    min-height: 44px;
+    padding: var(--espacio-3) var(--espacio-5);
+    border-radius: var(--radio-pill);
+    font-family: var(--font-texto);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color var(--dur-fast) ease,
+                color var(--dur-fast) ease,
+                border-color var(--dur-fast) ease,
+                transform var(--dur-fast) ease,
+                box-shadow var(--dur-fast) ease;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Variante Principal: fondo naranja-grill, tinta texto-sobre-oro */
+  .btn--primary {
+    background-color: var(--naranja-grill);
+    color: var(--texto-sobre-oro);
+    border-color: var(--naranja-grill);
+    box-shadow: 0 2px 8px rgba(224, 138, 14, 0.25);
+  }
+
+  @media (hover: hover) {
+    .btn--primary:hover {
+      background-color: #cb7a07; /* 8% oscurecido según manual */
+      border-color: #cb7a07;
+      color: var(--texto-sobre-oro);
+      transform: translateY(-1px);
+    }
+  }
+
+  /* Variante Secundario: transparente, borde borde-fuerte de 2px, texto texto */
+  .btn--secondary {
+    background-color: transparent;
+    color: var(--texto);
+    border-color: var(--borde-fuerte);
+  }
+
+  @media (hover: hover) {
+    .btn--secondary:hover {
+      background-color: var(--crema-hundido);
+      border-color: var(--naranja-grill);
+      color: var(--texto);
+    }
+  }
+
+  /* Variante Oscuro: fondo parrilla, tinta texto-sobre-parrilla */
+  .btn--dark {
+    background-color: var(--parrilla);
+    color: var(--texto-sobre-parrilla);
+    border-color: var(--parrilla);
+  }
+
+  @media (hover: hover) {
+    .btn--dark:hover {
+      background-color: #1e1915;
+      color: var(--texto-sobre-parrilla);
+      transform: translateY(-1px);
+    }
+  }
+
+  /* Variante Outline Ámbar */
+  .btn--outline {
+    background-color: transparent;
+    color: var(--texto-ambar);
+    border-color: var(--texto-ambar);
+  }
+
+  @media (hover: hover) {
+    .btn--outline:hover {
+      background-color: var(--crema-hundido);
+      color: var(--texto-ambar);
+    }
+  }
+
+  /* Tamaños */
+  .btn--sm {
+    min-height: 38px;
+    padding: var(--espacio-2) var(--espacio-4);
+    font-size: 0.875rem;
+  }
+
+  .btn--lg {
+    min-height: 52px;
+    padding: var(--espacio-4) var(--espacio-6);
+    font-size: 1.0625rem;
+  }
+
+  .btn__text {
+    line-height: 1;
+  }
+</style>
