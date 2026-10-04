@@ -25,6 +25,7 @@ const conReparto = locations.filter((loc) => loc.hasDelivery || loc.hasTakeAway)
             </svg>
             <span class="visually-hidden">Llamar a {loc.name}: </span>{loc.primaryPhone.display}
           </a>
+          {loc.deliveryNote && <p class="pedir__condiciones">{loc.deliveryNote}</p>}
           {loc.orderOnlineUrl && (
             <a class="pedir__online" href={loc.orderOnlineUrl} target="_blank" rel="noopener noreferrer">
               O pídelo a domicilio en Uber Eats
@@ -151,6 +152,14 @@ const conReparto = locations.filter((loc) => loc.hasDelivery || loc.hasTakeAway)
   .pedir__telefono:focus-visible,
   .pedir__online:focus-visible {
     outline-color: var(--oro-carta);
+  }
+
+  .pedir__condiciones {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    text-align: center;
+    opacity: 0.8;
   }
 
   .pedir__online {

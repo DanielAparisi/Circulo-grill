@@ -6,11 +6,6 @@ interface Props {
 }
 
 const { categories } = Astro.props;
-
-const etiquetaCorta = (title: string) => {
-  const primera = title.split(' ')[0];
-  return primera.charAt(0) + primera.slice(1).toLowerCase();
-};
 ---
 
 <nav class="menu-nav" aria-label="Secciones de la carta">
@@ -18,7 +13,7 @@ const etiquetaCorta = (title: string) => {
     {categories.map((cat) => (
       <li>
         <a href={`#cat-${cat.slug}`} class="menu-nav__enlace" data-categoria={`cat-${cat.slug}`}>
-          {etiquetaCorta(cat.title)}
+          {cat.navLabel}
         </a>
       </li>
     ))}

@@ -6,7 +6,7 @@ const platos = menuCategories.flatMap((cat) =>
   cat.items
     .filter((item) => item.isHouseSpecial)
     .slice(0, 1)
-    .map((item) => ({ ...item, categoria: cat.title.split(' ')[0].toLowerCase() }))
+    .map((item) => ({ ...item, categoria: cat.navLabel }))
 );
 ---
 
@@ -23,7 +23,7 @@ const platos = menuCategories.flatMap((cat) =>
         <span class="casa__numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
         <p class="casa__categoria etiqueta">{plato.categoria}</p>
         <h4 class="casa__nombre">{plato.name}</h4>
-        <p class="casa__desc">{plato.description}</p>
+        {plato.description && <p class="casa__desc">{plato.description}</p>}
         <p class="casa__precio">
           <span class="visually-hidden">Precio: </span>{plato.price}
         </p>

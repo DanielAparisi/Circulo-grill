@@ -15,6 +15,7 @@ export interface LocationInfo {
     details: { days: string; hours: string }[];
   };
   services: string[];
+  deliveryNote?: string;  // Condiciones de reparto tal como figuran en la carta
   features: string[];
   orderOnlineUrl?: string;
   mapsUrl: string;
@@ -51,13 +52,15 @@ export const locations: LocationInfo[] = [
       { display: '640 529 409', tel: '+34640529409' },
     ],
     hours: {
-      summary: 'Mediodía (13:00 – 16:30) y Cenas (19:00 – 23:30)',
+      summary: 'L, X, J y V · 20:00 – 23:30 · S y D también a mediodía',
       details: [
-        { days: 'Martes a Domingo', hours: '13:00 – 16:30 y 19:00 – 23:30' },
-        { days: 'Lunes', hours: 'Descanso del personal' },
+        { days: 'L, X, J y V', hours: '20:00 – 23:30' },
+        { days: 'S y D', hours: '13:00 – 16:00 y 20:00 – 23:30' },
+        { days: 'Martes', hours: 'Cerrado' },
       ],
     },
     services: ['Bufé libre', 'Terraza de verano', 'Platos veganos y vegetarianos', 'Take away', 'Delivery'],
+    deliveryNote: 'Pedido mínimo 15 € + 2,5 € de envío. Repartimos en 19174, 19170 y 28815.',
     features: ['Carne a la brasa', 'Cervezas de grifo y artesanas', 'Ambiente familiar'],
     mapsUrl: 'https://maps.google.com/?q=El+Circulo+Grill+de+las+Castillas+Castillo+Simancas+3+Torrejon+del+Rey',
     reviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4',

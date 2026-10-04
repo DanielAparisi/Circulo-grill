@@ -1,29 +1,24 @@
-export interface MenuItemOption {
-  name: string;
-  extraPrice?: string;
-}
+// Carta de Círculo Grill de Las Castillas, transcrita de la carta impresa (octubre 2026).
+// Precios sin símbolo de euro y con coma decimal, como en la carta.
 
 export interface MenuItem {
   id: string;
   name: string;
-  price: string; // e.g. "7,5", "11,5" (sin símbolo € según manual)
-  numericPrice: number;
-  description: string;
-  isHouseSpecial?: boolean; // Plato destacado de la casa
-  isNew?: boolean;          // Novedad
-  isSpicy?: boolean;        // Picante (con guindilla)
-  isVegetarian?: boolean;   // Vegetariano (con hoja)
-  isVegan?: boolean;        // Vegano
-  promoNote?: string;
-  options?: string[];       // Variaciones o elecciones (ej. quesadillas)
-  allergens?: string[];
+  price: string;           // "7,5", "5 / 5,5"
+  description?: string;
+  isHouseSpecial?: boolean; // Los platos "Círculo" de la casa
+  isNew?: boolean;
+  isSpicy?: boolean;        // Jalapeños, búfalo, chili (manual 10.2)
+  isVegetarian?: boolean;   // La hoja verde de la carta
+  options?: string[];
 }
 
 export interface MenuCategory {
   id: string;
   slug: string;
-  title: string;           // ENTRANTES, HAMBURGUESAS, etc. en mayúsculas
-  subtitle?: string;        // Descripción o entradilla breve
+  title: string;      // Rótulo en mayúsculas
+  navLabel: string;   // Nombre corto para las pestañas
+  subtitle?: string;
   items: MenuItem[];
 }
 
@@ -31,183 +26,214 @@ export const menuCategories: MenuCategory[] = [
   {
     id: 'entrantes',
     slug: 'entrantes',
-    title: 'ENTRANTES PARA COMPARTIR',
-    subtitle: 'Raciones generosas para empezar en el centro de la mesa.',
+    title: 'ENTRANTES',
+    navLabel: 'Entrantes',
+    subtitle: 'Para el centro de la mesa.',
     items: [
       {
-        id: 'combo-el-circulo',
-        name: 'Combo El Círculo',
-        price: '12,5',
-        numericPrice: 12.5,
-        description: 'Por si no puedes elegir: aros de cebolla, alitas, palitos de queso y jalapeños con salsas ranchera y BBQ.',
+        id: 'el-circulo-combo',
+        name: 'El Círculo Combo',
+        price: '13',
+        description: 'Aros de cebolla, 4 alitas, 4 palitos de queso y 4 delicias de jalapeño, con salsas ranchera y BBQ.',
         isHouseSpecial: true,
       },
       {
-        id: 'nachos-mexicanos',
-        name: 'Nachos Mexicanos',
-        price: '9,0',
-        numericPrice: 9.0,
-        description: 'Totopos de maíz crujientes cubiertos de chili casero, queso fundido, jalapeños y pico de gallo. Añade guacamole por 2 € más.',
-        isSpicy: true,
-      },
-      {
         id: 'alitas-pollo',
-        name: 'Alitas de Pollo',
-        price: '7,5',
-        numericPrice: 7.5,
-        description: 'Alitas de pollo asadas a la brasa. Pídelas con salsa barbacoa suave o con salsa búfalo picante.',
-        isSpicy: true,
-      },
-      {
-        id: 'patatas-queso-bacon',
-        name: 'Patatas con Queso y Bacon',
-        price: '7,5',
-        numericPrice: 7.5,
-        description: 'Patatas fritas rústicas cortadas a mano, salsa cheddar caliente y dados de bacon ahumado crujiente.',
+        name: 'Alitas de pollo',
+        price: '9,5',
+        description: '8 alitas con nuestra salsa BBQ o búfalo. ¡Tú eliges!',
       },
       {
         id: 'aros-cebolla',
-        name: 'Aros de Cebolla',
-        price: '6,5',
-        numericPrice: 6.5,
-        description: 'Aros de cebolla enteros dorados y crujientes con dip de salsa barbacoa.',
+        name: 'Aros de cebolla',
+        price: '7,5',
+        description: 'Cebolla rebozada en nuestra forma favorita: círculos.',
+        isVegetarian: true,
+      },
+      {
+        id: 'nachos-mexicanos',
+        name: 'Nachos mexicanos',
+        price: '12',
+        description: 'Cubiertos de chili casero, queso, pico de gallo, jalapeños y salsa agria. Añade guacamole por 2 € más.',
+        isSpicy: true,
+      },
+      {
+        id: 'cheesy-bacon-fries',
+        name: 'Cheesy-Bacon Fries',
+        price: '11',
+        description: 'Patatas caseras con salsa ranchera, queso y bacon.',
+      },
+      {
+        id: 'mexican-fries',
+        name: 'Mexican Fries',
+        price: '12',
+        description: 'Lo mejor de nuestros dos platos estrella: nachos y cheesy fries.',
+      },
+      {
+        id: 'quesadillas',
+        name: 'Quesadillas',
+        price: '12',
+        description: 'Elige una de nuestras tres opciones:',
+        options: [
+          'Queso y pollo',
+          'Queso de cabra y cebolla caramelizada (vegetariana)',
+          'Queso, pollo, bacon y salsa BBQ',
+        ],
+      },
+      {
+        id: 'palitos-pollo',
+        name: 'Palitos de pollo',
+        price: '9,5',
+        description: '8 piezas de pollo empanado con salsa BBQ o miel-mostaza.',
+      },
+      {
+        id: 'tequenos',
+        name: 'Tequeños',
+        price: '9',
+        description: '7 unidades con mermelada de frambuesa.',
         isVegetarian: true,
       },
       {
         id: 'palitos-queso',
-        name: 'Palitos de Queso Mozzarella',
-        price: '7,0',
-        numericPrice: 7.0,
-        description: 'Seis unidades de queso mozzarella fundente empanado con salsa de tomate especiada.',
+        name: 'Palitos de queso',
+        price: '8',
+        description: '7 unidades de mozzarella empanada con mermelada.',
         isVegetarian: true,
       },
       {
-        id: 'delicias-jalapeno',
-        name: 'Delicias de Jalapeño',
-        price: '7,0',
-        numericPrice: 7.0,
-        description: 'Bocados de pimiento jalapeño rellenos de queso crema en tempura fina.',
-        isSpicy: true,
+        id: 'huevos-rotos',
+        name: 'Huevos rotos',
+        price: '8,5',
+        description: 'Añade jamón por 2 € más.',
         isVegetarian: true,
       },
     ],
   },
   {
-    id: 'hamburguesas',
-    slug: 'hamburguesas',
-    title: 'HAMBURGUESAS A LA BRASA',
-    subtitle: '100% vacuno hecho al carbón con pan brioche artesano y patatas fritas incluidas.',
+    id: 'burgers',
+    slug: 'burgers',
+    title: 'NUESTRAS BURGERS',
+    navLabel: 'Burgers',
+    subtitle: 'Todas llevan patatas y son de 150 g.',
     items: [
+      {
+        id: 'clasica',
+        name: 'Clásica',
+        price: '9',
+        description: 'Tomate, lechuga y cebolla.',
+      },
+      {
+        id: 'cheese-burger',
+        name: 'Cheese-Burger',
+        price: '10',
+        description: 'Como la clásica, pero con queso cheddar.',
+      },
+      {
+        id: 'bacon-burger',
+        name: 'Bacon-Burger',
+        price: '10',
+        description: 'Como la clásica, pero con bacon.',
+      },
+      {
+        id: 'especial',
+        name: 'Especial',
+        price: '11',
+        description: 'Tomate, lechuga, cebolla, queso y bacon.',
+      },
+      {
+        id: 'especial-pollo',
+        name: 'Especial pollo',
+        price: '12',
+        description: 'Como la especial, pero de pechuga de pollo.',
+      },
+      {
+        id: 'circulo-burger',
+        name: 'Círculo Burger',
+        price: '12',
+        description: 'Tomate, lechuga, cebolla caramelizada y queso de cabra.',
+        isHouseSpecial: true,
+      },
+      {
+        id: 'n-320',
+        name: 'N-320',
+        price: '12',
+        description: 'Tomate, lechuga, cebolla caramelizada y queso Philadelphia.',
+      },
+      {
+        id: 'veggie-burger',
+        name: 'Veggie-Burger',
+        price: '12',
+        description: 'Tomate, lechuga, cebolla y queso gratinado.',
+        isVegetarian: true,
+      },
+      {
+        id: 'crispy-cesar',
+        name: 'Crispy César',
+        price: '13',
+        description: 'Pollo rebozado con tomate, lechuga, cebolla frita, queso, bacon y salsa parmesana.',
+      },
+      {
+        id: 'gorgon-burger',
+        name: 'Gorgon-Burger',
+        price: '12',
+        description: 'Tomate, lechuga, cebolla y gorgonzola sobre mermelada de frambuesa.',
+      },
       {
         id: 'bbq-burger',
-        name: 'BBQ-Burger Círculo',
-        price: '11,5',
-        numericPrice: 11.5,
-        description: 'Carne de vacuno a la parrilla, queso cheddar madurado, doble bacon ahumado, aros de cebolla y salsa BBQ casera.',
-        isHouseSpecial: true,
-      },
-      {
-        id: 'burger-pollo-parrilla',
-        name: 'Especial Pollo a la Parrilla',
-        price: '10,5',
-        numericPrice: 10.5,
-        description: 'Pechuga a la brasa (o pídelo con pollo empanado crujiente), lechuga batavia, tomate, queso y mayonesa de hierbas.',
-      },
-      {
-        id: 'cheeseburger-clasica',
-        name: 'Cheeseburger Clásica',
-        price: '9,5',
-        numericPrice: 9.5,
-        description: 'Carne de vacuno a la brasa, doble loncha de cheddar fundido, pepinillo agridulce, cebolla y salsa grill.',
-      },
-      {
-        id: 'smash-burger-bacon',
-        name: 'Smash Burger Doble Bacon',
+        name: 'BBQ-Burger',
         price: '12,5',
-        numericPrice: 12.5,
-        description: 'Dos discos de vacuno aplastados en plancha viva con costra crujiente, queso americano y salsa de la casa.',
-        isNew: true,
+        description: 'Tomate, lechuga, cebolla caramelizada, bacon, huevo frito y salsa BBQ.',
       },
       {
-        id: 'burger-las-castillas',
-        name: 'Burger Las Castillas',
-        price: '12,0',
-        numericPrice: 12.0,
-        description: 'Vacuno a la brasa, lascas de jamón ibérico curado, queso semicurado, cebolla confitada al vino y rúcula.',
+        id: 'quesera',
+        name: 'Quesera',
+        price: '12,5',
+        description: 'Tomate, lechuga, cebolla, queso cheddar, de cabra y gorgonzola.',
       },
       {
-        id: 'burger-vegetal',
-        name: 'Burger Vegana de la Huerta',
-        price: '10,5',
-        numericPrice: 10.5,
-        description: 'Medallón vegetal a la parrilla, láminas de aguacate, brotes verdes, tomate de la huerta y salsa vegana.',
-        isVegetarian: true,
-        isVegan: true,
-      },
-    ],
-  },
-  {
-    id: 'tortas',
-    slug: 'tortas',
-    title: 'TORTAS Y QUESADILLAS',
-    subtitle: 'Tostadas a la plancha sobre tortas de trigo artesanas.',
-    items: [
-      {
-        id: 'torta-pollo-bbq',
-        name: 'Torta de Pollo BBQ',
-        price: '8,5',
-        numericPrice: 8.5,
-        description: 'Pollo deshilachado a la barbacoa, mezcla de quesos fundidos y cebolla en torta de trigo dorada.',
+        id: 'mexicana',
+        name: 'Mexicana',
+        price: '12,5',
+        description: 'Tomate, lechuga, guacamole, pico de gallo y jalapeños.',
+        isSpicy: true,
       },
       {
-        id: 'torta-jamon-serrano',
-        name: 'Torta Jamón Serrano',
-        price: '8,0',
-        numericPrice: 8.0,
-        description: 'Jamón serrano reserva, tomate natural rallado con aceite de oliva virgen extra y queso gratinado.',
-      },
-      {
-        id: 'quesadilla-circulo',
-        name: 'Quesadillas Círculo',
-        price: '8,0',
-        numericPrice: 8.0,
-        description: 'Tortilla de trigo a la plancha rellena de queso gouda y cheddar, servida con pico de gallo y salsa suave.',
-        options: [
-          'Solo quesos (vegetariano)',
-          'Con pollo a la parrilla (+1,5)',
-          'Con chili casero con carne (+1,5)',
-        ],
-        isVegetarian: true,
+        id: 'sweet-castle',
+        name: 'Sweet Castle',
+        price: '16',
+        description: "Doble carne, cheddar, bacon, tomate, lechuga y cebolla, con nuestra salsa casera de Jack Daniel's.",
       },
     ],
   },
   {
-    id: 'sandwiches-carnes',
-    slug: 'sandwiches-carnes',
-    title: 'SÁNDWICHES Y COSTILLAS',
-    subtitle: 'Carnes ahumadas a fuego lento y sándwiches completos.',
+    id: 'sandwiches',
+    slug: 'sandwiches',
+    title: 'SÁNDWICHES',
+    navLabel: 'Sándwiches',
     items: [
       {
-        id: 'costillas-bbq',
-        name: 'Costillar BBQ Círculo',
-        price: '15,0',
-        numericPrice: 15.0,
-        description: 'Costillar de cerdo asado a baja temperatura durante 6 horas, glaseado con salsa BBQ de la casa y patatas gajo.',
-        isHouseSpecial: true,
+        id: 'mixto',
+        name: 'Mixto',
+        price: '5 / 5,5',
+        description: 'Jamón york y queso (5) o bacon y queso (5,5).',
       },
       {
-        id: 'sandwich-club',
-        name: 'Sándwich Club Grill',
-        price: '9,0',
-        numericPrice: 9.0,
-        description: 'Tres rebanadas de pan tostado, pollo a la plancha, bacon, jamón york, queso, huevo frito y mahonesa ligera.',
-      },
-      {
-        id: 'pulled-pork',
-        name: 'Sándwich Pulled Pork',
+        id: 'circulo-roll',
+        name: 'Círculo Roll',
         price: '9,5',
-        numericPrice: 9.5,
-        description: 'Cerdo asado desmigado lentamente con jugo de manzana y salsa barbacoa en pan brioche.',
+        description: 'Dos tortillas de trigo enrolladas con pollo empanado, lechuga, tomate y salsa César.',
+      },
+      {
+        id: 'americano',
+        name: 'Americano',
+        price: '9,5',
+        description: 'Bacon, cheddar, jamón york y huevo frito sobre lechuga, tomate, mayonesa y mostaza.',
+      },
+      {
+        id: 'gofre-pollo',
+        name: 'Gofre con pollo',
+        price: '9,5',
+        description: '¿Dulce o salado? Gofre con pollo empanado.',
       },
     ],
   },
@@ -215,64 +241,113 @@ export const menuCategories: MenuCategory[] = [
     id: 'ensaladas-pasta',
     slug: 'ensaladas-pasta',
     title: 'ENSALADAS Y PASTA',
-    subtitle: 'Opciones frescas y ligeras preparadas al momento.',
+    navLabel: 'Ensaladas',
     items: [
       {
         id: 'ensalada-cesar',
-        name: 'Ensalada César con Pollo a la Brasa',
-        price: '8,5',
-        numericPrice: 8.5,
-        description: 'Corazones de lechuga romana, tiras de pollo a la brasa, picatostes artesanos, lascas de grana padano y salsa César.',
+        name: 'César',
+        price: '12',
+        description: 'Pollo a la parrilla, cebolla roja, picatostes, parmesano y salsa César.',
       },
       {
-        id: 'ensalada-huerta',
-        name: 'Ensalada Campestre',
-        price: '7,0',
-        numericPrice: 7.0,
-        description: 'Tomate de temporada, cebolla roja, aceitunas negras, pepino y vinagreta clásica.',
-        isVegetarian: true,
-        isVegan: true,
+        id: 'ensalada-circulo',
+        name: 'Círculo',
+        price: '12',
+        description: 'Pollo rebozado, bacon, mezcla de quesos y tomate.',
       },
       {
-        id: 'pasta-grill',
-        name: 'Pasta Rustica al Horno',
-        price: '8,5',
-        numericPrice: 8.5,
-        description: 'Pasta rigatoni con salsa de tomate casera, carne picada al carbón y gratinado de cuatro quesos.',
+        id: 'ensalada-mediterranea',
+        name: 'Mediterránea',
+        price: '12',
+        description: 'Jamón, queso de cabra, tomates cherry, pasas y vinagreta balsámica casera.',
+      },
+      {
+        id: 'creamy-chicken-pasta',
+        name: 'Creamy Chicken Pasta',
+        price: '12',
+        description: 'Nata, cebolla caramelizada, quesos, gorgonzola y parmesano, con pechuga a la parrilla.',
       },
     ],
   },
   {
-    id: 'postres-bebidas',
-    slug: 'postres-bebidas',
-    title: 'POSTRES Y BATIDOS',
-    subtitle: 'El broche dulce casero para terminar la comida.',
+    id: 'tortas',
+    slug: 'tortas',
+    title: 'TORTAS',
+    navLabel: 'Tortas',
     items: [
       {
-        id: 'tarta-queso',
-        name: 'Tarta de Queso al Horno',
-        price: '5,5',
-        numericPrice: 5.5,
-        description: 'Elaboración casera horneada a diario con base de galleta y textura cremosa.',
+        id: 'torta-jamon-serrano',
+        name: 'Jamón serrano',
+        price: '16',
+        description: 'Salsa de tomate y queso.',
+      },
+      {
+        id: 'torta-bacon',
+        name: 'Bacon',
+        price: '16',
+        description: 'Salsa de tomate y queso.',
+      },
+      {
+        id: 'torta-pollo-bbq',
+        name: 'Pollo BBQ',
+        price: '16',
+        description: 'Bacon, pollo empanado, cebolla, tomate y queso, bañada en salsa BBQ.',
+      },
+    ],
+  },
+  {
+    id: 'carnes',
+    slug: 'carnes',
+    title: 'CARNES',
+    navLabel: 'Carnes',
+    items: [
+      {
+        id: 'costillar-circulo',
+        name: 'Costillar Círculo',
+        price: '20 / 13',
+        description: 'Bañado en salsa BBQ, con patatas fritas. Entero (20) o medio (13).',
         isHouseSpecial: true,
-        isVegetarian: true,
       },
       {
-        id: 'brownie-helado',
-        name: 'Brownie Caliente con Helado',
-        price: '5,0',
-        numericPrice: 5.0,
-        description: 'Bizcocho de chocolate negro y nueces templado, coronado con helado artesano de vainilla y sirope de chocolate.',
-        isVegetarian: true,
+        id: 'entrecot',
+        name: 'Entrecot',
+        price: '17,5',
+        description: '300 g de entrecot con patatas fritas.',
       },
+    ],
+  },
+  {
+    id: 'menu-infantil',
+    slug: 'menu-infantil',
+    title: 'MENÚ INFANTIL',
+    navLabel: 'Infantil',
+    items: [
       {
-        id: 'batido-americano',
-        name: 'Batido Americano Artesano',
-        price: '4,5',
-        numericPrice: 4.5,
-        description: 'Batido batido al momento con leche fresca y helado. Sabores: Vainilla Bourbon, Chocolate Belga o Fresa silvestre.',
-        isVegetarian: true,
+        id: 'menu-infantil',
+        name: 'Menú infantil',
+        price: '9',
+        description: 'Elige uno de cada:',
+        options: [
+          'Bebida: agua, zumo o refresco',
+          'Principal: fingers de pollo, combo de fingers de pollo y queso, sándwich mixto, hamburguesa clásica o cheeseburger. Todos con patatas fritas',
+          'Postre: helado o tortita con sirope',
+        ],
       },
+    ],
+  },
+  {
+    id: 'postres',
+    slug: 'postres',
+    title: 'POSTRES',
+    navLabel: 'Postres',
+    items: [
+      { id: 'coulant', name: 'Coulant de chocolate', price: '5' },
+      { id: 'gofre-helado', name: 'Gofre con helado y nata', price: '5' },
+      { id: 'brownie', name: 'Brownie con helado', price: '6' },
+      { id: 'circulo-pancakes', name: 'Círculo Pancakes', price: '6', isHouseSpecial: true },
+      { id: 'copa-oreo', name: 'Copa Oreo', price: '6' },
+      { id: 'trozo-tarta', name: 'Trozo de tarta', price: '5' },
+      { id: 'batido-helado', name: 'Batido de helado', price: '6' },
     ],
   },
 ];

@@ -85,15 +85,25 @@ import { menuCategories } from '../../data/menu';
     gap: 6px;
   }
 
-  .carta__columnas {
-    display: grid;
-    gap: var(--espacio-7);
+  /* Columnas de periódico: las secciones tienen largos muy distintos (de 1 a 14 platos)
+     y así se reparten sin dejar los huecos que dejaría una rejilla. */
+  .carta__columnas :global(.menu-category-section) {
+    margin-bottom: var(--espacio-7);
+  }
+
+  .carta__columnas :global(.menu-category-section:last-child) {
+    margin-bottom: 0;
   }
 
   @media (min-width: 960px) {
     .carta__columnas {
-      grid-template-columns: 1fr 1fr;
+      columns: 2;
       column-gap: var(--espacio-8);
+    }
+
+    /* Cada sección entera en una columna: Entrantes + Burgers a un lado, el resto al otro */
+    .carta__columnas :global(.menu-category-section) {
+      break-inside: avoid;
     }
   }
 
