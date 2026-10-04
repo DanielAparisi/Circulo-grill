@@ -65,6 +65,9 @@
   --dur-fast: 150ms;
   --dur-base: 300ms;
   --dur-slow: 600ms;
+
+  /* Cabecera fija */
+  --header-h: 64px;
 }
 
 [data-theme="dark"] {

@@ -1,0 +1,204 @@
+---
+import { menuCategories } from '../../data/menu';
+
+// Un plato de la casa por sección de la carta (manual 10.4)
+const platos = menuCategories.flatMap((cat) =>
+  cat.items
+    .filter((item) => item.isHouseSpecial)
+    .slice(0, 1)
+    .map((item) => ({ ...item, categoria: cat.title.split(' ')[0].toLowerCase() }))
+);
+---
+
+<section class="casa" id="de-la-casa" aria-labelledby="casa-titulo">
+  <header class="casa__cabecera">
+    <h3 id="casa-titulo" class="seccion">De la casa</h3>
+    <span class="casa__filete" aria-hidden="true"></span>
+    <p class="casa__entradilla">Si es tu primera vez, empieza por aquí: los platos que salen de cocina una y otra vez.</p>
+  </header>
+
+  <ol class="casa__lista" role="list">
+    {platos.map((plato, i) => (
+      <li class="casa__plato" data-reveal style={`--reveal-i: ${i}`}>
+        <span class="casa__numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <p class="casa__categoria etiqueta">{plato.categoria}</p>
+        <h4 class="casa__nombre">{plato.name}</h4>
+        <p class="casa__desc">{plato.description}</p>
+        <p class="casa__precio">
+          <span class="visually-hidden">Precio: </span>{plato.price}
+        </p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .casa {
+    scroll-margin-top: calc(var(--header-h) + var(--espacio-5));
+    margin-bottom: var(--espacio-7);
+  }
+
+  .casa__cabecera {
+    margin-bottom: var(--espacio-5);
+  }
+
+  .casa__cabecera h3 {
+    margin: 0;
+  }
+
+  /* Mismo filete largo que las secciones de la carta */
+  .casa__filete {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    margin-top: var(--espacio-2);
+  }
+
+  .casa__filete::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radio-pill);
+    background-color: var(--naranja-grill);
+  }
+
+  .casa__filete::after {
+    content: "";
+    flex: 1;
+    height: 3px;
+    border-radius: var(--radio-pill);
+    background-color: var(--oro-carta);
+  }
+
+  .casa__entradilla {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--texto-suave);
+    margin: var(--espacio-2) 0 0;
+  }
+
+  .casa__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--espacio-4);
+  }
+
+  /* Móvil: carrusel horizontal; la siguiente tarjeta asoma para invitar a deslizar */
+  @media (max-width: 639px) {
+    .casa__lista {
+      grid-auto-flow: column;
+      grid-auto-columns: 82%;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      margin-inline: calc(-1 * var(--gutter));
+      padding: 2px var(--gutter) var(--espacio-2);
+      scrollbar-width: none;
+    }
+
+    .casa__lista::-webkit-scrollbar {
+      display: none;
+    }
+
+    .casa__plato {
+      scroll-snap-align: start;
+    }
+
+    .casa__numero {
+      margin-bottom: var(--espacio-3);
+    }
+  }
+
+  @media (min-width: 640px) {
+    .casa__lista {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .casa__lista {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .casa__plato {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--espacio-5);
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-l);
+    overflow: hidden;
+    transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+
+  /* Disco oro asomando por la esquina: el recurso circular de los destacados */
+  .casa__plato::after {
+    content: "";
+    position: absolute;
+    width: 110px;
+    aspect-ratio: 1;
+    top: -55px;
+    right: -55px;
+    border-radius: var(--radio-pill);
+    background-color: var(--melocoton);
+    opacity: 0.5;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .casa__plato:hover {
+      border-color: var(--borde-fuerte);
+      transform: translateY(-2px);
+    }
+
+    .casa__plato:hover::after {
+      transform: scale(1.25);
+    }
+  }
+
+  .casa__numero {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: var(--texto-ambar);
+    margin-bottom: var(--espacio-5);
+  }
+
+  .casa__categoria {
+    color: var(--texto-suave);
+    margin: 0 0 var(--espacio-1);
+  }
+
+  .casa__nombre {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin: 0 0 var(--espacio-2);
+  }
+
+  .casa__desc {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--texto-suave);
+    margin: 0 0 var(--espacio-5);
+  }
+
+  .casa__precio {
+    margin: auto 0 0;
+    padding-top: var(--espacio-3);
+    border-top: 1px dashed var(--borde-fuerte);
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--texto-ambar);
+  }
+</style>

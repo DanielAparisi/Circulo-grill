@@ -1,38 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/sections/Hero.astro';
-import GoogleBusinessCard from '../components/sections/GoogleBusinessCard.astro';
 import CartaSection from '../components/sections/CartaSection.astro';
-import PromoBanner from '../components/sections/PromoBanner.astro';
+import PedirBanda from '../components/sections/PedirBanda.astro';
 import LocationsSection from '../components/sections/LocationsSection.astro';
+import BarraMovil from '../components/layout/BarraMovil.astro';
 ---
 
 <Layout
-  title="Círculo Grill — Bar & Parrilla en Las Castillas (Torrejón del Rey) y Meco"
-  description="Hamburguesas a la brasa, costillas, entrantes caseros, bufé libre, terraza y servicio a domicilio en Las Castillas (Torrejón del Rey) y Meco. Teléfono: 949 32 74 51."
+  title="Círculo Grill — Bar y parrilla en Las Castillas (Torrejón del Rey) y Meco"
+  description="Hamburguesas al carbón, costillas, entrantes para compartir, take away y delivery en Las Castillas (Torrejón del Rey) y Meco. Llama al 949 32 74 51."
 >
-  <!-- Portada Hero con tono cálido, logo y botones de acción rápida -->
   <Hero />
-
-  <!-- Ficha verificada de Google Business con valoración 4,5★ (307 reseñas) y botones directos -->
-  <div class="container">
-    <GoogleBusinessCard />
-  </div>
-
-  <!-- Banda de servicio Take Away & Delivery con el diseño del manual de marca -->
-  <div class="container">
-    <PromoBanner
-      variant="promo"
-      badge="TAKE AWAY & DELIVERY"
-      title="PIDE PARA LLEVAR O TE LO LLEVAMOS A CASA"
-      condition="Servicio a domicilio en Las Castillas, Torrejón del Rey y alrededores. También disponible en nuestro punto de Meco (C.C. Belvalle)."
-      phone="640 529 409"
-    />
-  </div>
-
-  <!-- Carta completa estructurada por categorías con navegación pegajosa -->
   <CartaSection />
-
-  <!-- Información de los dos locales: Las Castillas y Círculo Grill & Go en Meco -->
+  <PedirBanda />
   <LocationsSection />
+  <BarraMovil />
 </Layout>

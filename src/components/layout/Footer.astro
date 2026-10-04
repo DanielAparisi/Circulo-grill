@@ -2,7 +2,7 @@
 import Logo from '../ui/Logo.astro';
 ---
 
-<footer class="site-footer" id="contacto">
+<footer class="site-footer borde-almenado" id="contacto">
   <div class="container footer-container">
     <div class="footer-top">
       <div class="footer-brand">
@@ -78,6 +78,8 @@ import Logo from '../ui/Logo.astro';
     padding-top: var(--espacio-7);
     padding-bottom: var(--espacio-6);
     margin-top: auto;
+    /* deja sitio a las almenas */
+    border-top: 16px solid var(--crema);
   }
 
   .site-footer a {
@@ -161,7 +163,7 @@ import Logo from '../ui/Logo.astro';
   }
 
   .sub-text {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     opacity: 0.8;
   }
 

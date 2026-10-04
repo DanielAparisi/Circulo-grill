@@ -101,7 +101,6 @@ export const locations: LocationInfo[] = [
     features: ['Pedidos por teléfono o WhatsApp', 'Empaquetado térmico especial'],
     mapsUrl: 'https://maps.google.com/?q=Circulo+Grill+Meco+Belvalle',
     reviewUrl: 'https://search.google.com/local/writereview',
-    orderOnlineUrl: 'https://www.just-eat.es',
     hasDelivery: true,
     hasTakeAway: true,
     hasTerrace: false,

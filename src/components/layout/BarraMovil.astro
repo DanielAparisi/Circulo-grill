@@ -1,0 +1,94 @@
+---
+// Barra fija abajo en móvil: las dos acciones que más se usan, al alcance del pulgar.
+// Aparece cuando los botones de la portada salen de pantalla.
+---
+
+<nav class="barra-movil" id="barra-movil" aria-label="Acciones rápidas" data-oculta>
+  <a href="#carta" class="barra-movil__accion barra-movil__accion--secundaria">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h8"/><path d="M8 11h8"/>
+    </svg>
+    La carta
+  </a>
+  <a href="#pedir" class="barra-movil__accion barra-movil__accion--principal">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </svg>
+    Llamar o pedir
+  </a>
+</nav>
+
+<style>
+  .barra-movil {
+    display: none;
+  }
+
+  @media (max-width: 599px) {
+    .barra-movil {
+      position: fixed;
+      z-index: 60;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--espacio-2);
+      padding: var(--espacio-2) var(--gutter) calc(var(--espacio-2) + env(safe-area-inset-bottom));
+      background-color: rgb(255 252 241 / 0.94);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--borde);
+      transition: transform var(--dur-base) var(--ease-out), visibility 0s;
+    }
+
+    /* Oculta también para teclado y lector de pantalla, no solo fuera de la vista */
+    .barra-movil[data-oculta] {
+      transform: translateY(110%);
+      visibility: hidden;
+      transition: transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+    }
+
+    /* Hueco dentro del pie para que la barra no tape su final */
+    :global(.site-footer) {
+      padding-bottom: calc(var(--espacio-6) + 68px + env(safe-area-inset-bottom));
+    }
+  }
+
+  .barra-movil__accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-2);
+    min-height: 48px;
+    border-radius: var(--radio-pill);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+  }
+
+  .barra-movil__accion--secundaria,
+  .barra-movil__accion--secundaria:hover {
+    border: 2px solid var(--borde-fuerte);
+    color: var(--texto);
+  }
+
+  .barra-movil__accion--principal,
+  .barra-movil__accion--principal:hover {
+    background-color: var(--naranja-grill);
+    color: var(--texto-sobre-oro);
+  }
+</style>
+
+<script>
+  const barra = document.getElementById('barra-movil');
+  const portada = document.querySelector('.hero__acciones');
+
+  if (barra && portada && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([entry]) => {
+      barra.toggleAttribute('data-oculta', entry.isIntersecting || entry.boundingClientRect.top > 0);
+    });
+    io.observe(portada);
+  } else {
+    barra?.removeAttribute('data-oculta');
+  }
+</script>

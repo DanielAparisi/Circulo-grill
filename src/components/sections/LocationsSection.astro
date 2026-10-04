@@ -1,121 +1,80 @@
 ---
-import SectionHeading from '../ui/SectionHeading.astro';
 import Button from '../ui/Button.astro';
 import { locations } from '../../data/locations';
 ---
 
-<section class="locations-section section-padding" id="locales" aria-label="Nuestros locales">
+<section class="locales section-padding" id="locales" aria-labelledby="locales-titulo">
   <div class="container">
-    <SectionHeading
-      badge="DÓNDE ESTAMOS"
-      title="NUESTROS LOCALES"
-      subtitle="Dos ubicaciones pensadas para ti: sala y terraza en Las Castillas, y Círculo Grill & Go en Meco."
-      align="center"
-      variant="short"
-    />
+    <header class="locales__cabecera">
+      <p class="antetitulo">Dos casas, dos cartas, dos teléfonos</p>
+      <h2 id="locales-titulo" class="rotulo-l">Dónde estamos</h2>
+    </header>
 
-    <div class="locations-grid">
+    <div class="locales__grid">
       {locations.map((loc) => (
-        <article class="tarjeta-local" id={`local-${loc.id}`}>
-          <div class="tarjeta-local__header">
-            <div class="tarjeta-local__icon-box" aria-hidden="true">
-              <!-- Icono del castillo almenado de Las Castillas -->
+        <article class="local" id={`local-${loc.id}`} aria-labelledby={`local-${loc.id}-nombre`}>
+          <header class="local__cabecera">
+            <span class="local__marca" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 21V8l2-2v3h2V6l2-2 2 2v3h2V6l2-2 2 2v3h2l2 2v13H4Z"/>
+                <path d="M4 21V8h3v2h2V8h3v2h2V8h3v2h2V8h1v13"/>
+                <path d="M3 21h18"/>
                 <path d="M10 21v-4a2 2 0 0 1 4 0v4"/>
               </svg>
+            </span>
+            <div>
+              <p class="local__tipo etiqueta">{loc.badge}</p>
+              <h3 id={`local-${loc.id}-nombre`} class="local__nombre">{loc.name}</h3>
             </div>
-            <div class="tarjeta-local__title-group">
-              <span class="tarjeta-local__badge etiqueta">{loc.badge}</span>
-              <h3 class="tarjeta-local__name rotulo-m">{loc.name}</h3>
-            </div>
-          </div>
+          </header>
 
-          <p class="tarjeta-local__tagline cuerpo-s">{loc.tagline}</p>
-
-          <div class="tarjeta-local__data">
-            <!-- Ubicación -->
-            <div class="data-row">
-              <div class="data-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                  <circle cx="12" cy="10" r="3"/>
+          <dl class="local__datos">
+            <div class="local__fila">
+              <dt>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
                 </svg>
-              </div>
-              <div class="data-content">
-                <strong>Ubicación:</strong>
-                <span>{loc.address}</span>
-                <span>{loc.postalCode} {loc.city} ({loc.province})</span>
-              </div>
+                Dirección
+              </dt>
+              <dd>
+                {loc.address}<br />
+                {loc.postalCode} {loc.city} ({loc.province})
+              </dd>
             </div>
 
-            <!-- Horario -->
-            <div class="data-row">
-              <div class="data-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12 6 12 12 16 14"/>
+            <div class="local__fila">
+              <dt>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                 </svg>
-              </div>
-              <div class="data-content">
-                <strong>Horario de cocina:</strong>
-                <span>{loc.hours.summary}</span>
-                <ul class="hours-list">
+                Horario
+              </dt>
+              <dd>
+                <ul class="local__horas" role="list">
                   {loc.hours.details.map((d) => (
-                    <li><span class="days">{d.days}:</span> {d.hours}</li>
+                    <li><span>{d.days}</span> <span>{d.hours}</span></li>
                   ))}
                 </ul>
-              </div>
+              </dd>
             </div>
 
-            <!-- Teléfono directo clicable -->
-            <div class="data-row">
-              <div class="data-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="local__fila">
+              <dt>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
-              </div>
-              <div class="data-content">
-                <strong>Teléfono para pedidos / contacto:</strong>
-                <div class="phones-list">
-                  {loc.phones.map((p, index) => (
-                    <a href={`tel:${p.tel}`} class="tel-link">
-                      {p.display}
-                      {index < loc.phones.length - 1 && <span class="phone-sep">/</span>}
-                    </a>
-                  ))}
-                </div>
-              </div>
+                Teléfono
+              </dt>
+              <dd class="local__telefonos">
+                {loc.phones.map((p) => <a href={`tel:${p.tel}`}>{p.display}</a>)}
+              </dd>
             </div>
-          </div>
+          </dl>
 
-          <!-- Servicios del local -->
-          <div class="tarjeta-local__services">
-            {loc.services.map((srv) => (
-              <span class="loc-srv-chip">{srv}</span>
-            ))}
-          </div>
+          <p class="local__servicios">{loc.services.join(' · ')}</p>
 
-          <!-- Acciones de la tarjeta -->
-          <div class="tarjeta-local__actions">
-            {loc.hasDelivery ? (
-              <Button href={loc.orderOnlineUrl || `tel:${loc.primaryPhone.tel}`} variant="primary" size="md">
-                <svg slot="icon-start" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-                </svg>
-                Pedir a domicilio
-              </Button>
-            ) : (
-              <Button href="#carta" variant="primary" size="md">
-                Ver la carta
-              </Button>
-            )}
-
+          <div class="local__acciones">
             <Button href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" variant="secondary" size="md">
-              <svg slot="icon-start" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="3 11 22 2 13 21 11 13 3 11"/>
-              </svg>
-              Cómo llegar
+              Cómo llegar a {loc.city}
             </Button>
           </div>
         </article>
@@ -125,183 +84,167 @@ import { locations } from '../../data/locations';
 </section>
 
 <style>
-  .locations-section {
-    background-color: var(--crema-hundido);
-    border-top: 1px solid var(--borde);
-    border-bottom: 1px solid var(--borde);
+  .locales__cabecera {
+    margin-bottom: var(--espacio-6);
   }
 
-  .locations-grid {
+  .locales__cabecera h2 {
+    margin: 0;
+  }
+
+  .locales__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--espacio-6);
-    margin-top: var(--espacio-5);
+    gap: var(--espacio-5);
   }
 
-  /* TarjetaLocal (AGENTS.md 10.5): blanco, radio-l, sombra-carta, relleno espacio-5 */
-  .tarjeta-local {
-    background-color: var(--blanco);
-    border-radius: var(--radio-l);
-    border: 1px solid var(--borde);
-    box-shadow: var(--sombra-carta);
-    padding: var(--espacio-5);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-width: 280px;
-    transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
-  }
-
-  @media (hover: hover) {
-    .tarjeta-local:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--sombra-elevada);
-      border-color: var(--borde-fuerte);
+  @media (min-width: 820px) {
+    .locales__grid {
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
     }
   }
 
-  .tarjeta-local__header {
+  .local {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: var(--espacio-5);
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-l);
+    box-shadow: var(--sombra-carta);
+  }
+
+  @media (min-width: 720px) {
+    .local {
+      padding: var(--espacio-6);
+    }
+  }
+
+  .local__cabecera {
     display: flex;
     align-items: center;
     gap: var(--espacio-3);
-    margin-bottom: var(--espacio-3);
+    padding-bottom: var(--espacio-4);
+    margin-bottom: var(--espacio-2);
+    border-bottom: 1px solid var(--borde);
   }
 
-  /* Marca cuadrada de oro-logo con radio-m e icono (AGENTS.md) */
-  .tarjeta-local__icon-box {
+  .local__marca {
+    display: grid;
+    place-items: center;
     width: 48px;
     height: 48px;
-    background-color: var(--oro-logo);
-    color: var(--parrilla);
+    flex-shrink: 0;
     border-radius: var(--radio-m);
+    background-color: var(--oro-logo);
+    color: var(--texto-sobre-oro);
+  }
+
+  .local__tipo {
+    color: var(--texto-suave);
+    margin: 0 0 2px;
+  }
+
+  .local__nombre {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 800;
+    line-height: 1.15;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .local__datos {
+    margin: 0;
+  }
+
+  .local__fila {
+    display: grid;
+    gap: var(--espacio-1);
+    padding-block: var(--espacio-3);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  @media (min-width: 480px) {
+    .local__fila {
+      grid-template-columns: 120px 1fr;
+      gap: var(--espacio-4);
+    }
+  }
+
+  .local__fila dt {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .tarjeta-local__title-group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .tarjeta-local__badge {
-    color: var(--texto-ambar);
-    font-size: 0.6875rem;
-    letter-spacing: 1px;
-  }
-
-  .tarjeta-local__name {
-    font-size: 1.1875rem;
-    margin: 0;
-    line-height: 1.25;
-    color: var(--texto);
-  }
-
-  .tarjeta-local__tagline {
-    color: var(--texto-suave);
-    margin-bottom: var(--espacio-4);
-  }
-
-  .tarjeta-local__data {
-    display: flex;
-    flex-direction: column;
-    gap: var(--espacio-3);
-    padding: var(--espacio-3) 0;
-    border-top: 1px solid var(--borde);
-    border-bottom: 1px solid var(--borde);
-    margin-bottom: var(--espacio-4);
-  }
-
-  .data-row {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--espacio-3);
-    font-family: var(--font-texto);
+    gap: var(--espacio-2);
     font-size: 0.875rem;
-    line-height: 1.45;
+    font-weight: 600;
+    color: var(--texto-suave);
   }
 
-  .data-icon {
+  .local__fila dt svg {
     color: var(--naranja-grill);
-    margin-top: 2px;
     flex-shrink: 0;
   }
 
-  .data-content {
-    display: flex;
-    flex-direction: column;
+  .local__fila dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
   }
 
-  .data-content strong {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--texto-suave);
-    margin-bottom: 2px;
-  }
-
-  .hours-list {
+  .local__horas {
     list-style: none;
+    margin: 0;
     padding: 0;
-    margin: 2px 0 0 0;
   }
 
-  .hours-list li {
-    font-size: 0.8125rem;
-    color: var(--texto);
-  }
-
-  .hours-list .days {
+  .local__horas li span:first-child {
     font-weight: 600;
   }
 
-  .phones-list {
+  .local__horas li span:first-child::after {
+    content: ":";
+  }
+
+  .local__telefonos {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: var(--espacio-1);
-    margin-top: 2px;
+    gap: var(--espacio-1) var(--espacio-4);
   }
 
-  .tel-link {
-    font-family: var(--font-texto);
+  .local__telefonos a {
     font-weight: 800;
-    font-size: 1.0625rem;
     font-variant-numeric: tabular-nums;
-    color: var(--texto-ambar);
+    font-size: 1.0625rem;
     text-decoration: none;
+    padding-block: 2px;
   }
 
-  .tel-link:hover {
+  .local__telefonos a:hover {
     text-decoration: underline;
   }
 
-  .phone-sep {
-    color: var(--borde-fuerte);
-    margin-left: 4px;
-    margin-right: 2px;
-  }
-
-  .tarjeta-local__services {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: var(--espacio-5);
-  }
-
-  .loc-srv-chip {
-    background-color: var(--crema-hundido);
-    padding: 2px 8px;
-    border-radius: var(--radio-s);
-    font-size: 0.6875rem;
-    font-weight: 600;
+  .local__servicios {
+    margin: var(--espacio-4) 0 var(--espacio-5);
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: var(--texto-suave);
   }
 
-  .tarjeta-local__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--espacio-2);
+  .local__acciones {
+    margin-top: auto;
+  }
+
+  /* El botón puede partirse en dos líneas en vez de ensanchar la tarjeta */
+  .local__acciones :global(.btn) {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  @media (min-width: 480px) {
+    .local__acciones :global(.btn) {
+      width: auto;
+    }
   }
 </style>

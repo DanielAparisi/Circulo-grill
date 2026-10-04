@@ -6,101 +6,123 @@ interface Props {
 }
 
 const { categories } = Astro.props;
+
+const etiquetaCorta = (title: string) => {
+  const primera = title.split(' ')[0];
+  return primera.charAt(0) + primera.slice(1).toLowerCase();
+};
 ---
 
-<nav class="menu-nav" aria-label="Categorías de la carta">
-  <div class="menu-nav__scroll">
-    {categories.map((cat, i) => (
-      <a
-        href={`#cat-${cat.slug}`}
-        class:list={['menu-nav__pill', i === 0 && 'is-active']}
-        data-category-target={cat.slug}
-      >
-        {cat.title.split(' ')[0]}
-      </a>
+<nav class="menu-nav" aria-label="Secciones de la carta">
+  <ul class="menu-nav__lista">
+    {categories.map((cat) => (
+      <li>
+        <a href={`#cat-${cat.slug}`} class="menu-nav__enlace" data-categoria={`cat-${cat.slug}`}>
+          {etiquetaCorta(cat.title)}
+        </a>
+      </li>
     ))}
-  </div>
+  </ul>
 </nav>
 
 <style>
   .menu-nav {
     position: sticky;
-    top: 68px;
-    z-index: 40;
-    background: rgba(255, 252, 241, 0.94);
+    top: var(--header-h);
+    z-index: 20;
+    margin: 0 0 var(--espacio-6);
+    background-color: rgb(255 252 241 / 0.94);
     backdrop-filter: blur(10px);
-    border-top: 1px solid var(--borde);
-    border-bottom: 1px solid var(--borde);
-    padding: var(--espacio-2) 0;
-    margin-bottom: var(--espacio-6);
+    border-block: 1px solid var(--borde);
   }
 
-  .menu-nav__scroll {
+  .menu-nav__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--espacio-2);
     display: flex;
-    align-items: center;
-    gap: var(--espacio-2);
+    justify-content: safe center;
+    gap: var(--espacio-1);
     overflow-x: auto;
     scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 0 var(--gutter);
-    max-width: var(--container);
-    margin: 0 auto;
   }
 
-  .menu-nav__scroll::-webkit-scrollbar {
+  @media (max-width: 719px) {
+    .menu-nav {
+      margin-inline: calc(-1 * var(--gutter));
+    }
+
+    .menu-nav__lista {
+      justify-content: flex-start;
+      padding-inline: calc(var(--gutter) - var(--espacio-3));
+    }
+  }
+
+  .menu-nav__lista::-webkit-scrollbar {
     display: none;
   }
 
-  .menu-nav__pill {
+  .menu-nav__enlace {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    padding: var(--espacio-2) var(--espacio-4);
-    border-radius: var(--radio-pill);
-    background-color: var(--blanco);
-    border: 1px solid var(--borde);
-    color: var(--texto);
-    font-family: var(--font-texto);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    min-height: 48px;
+    padding: 0 var(--espacio-3);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--texto-suave);
     text-decoration: none;
     white-space: nowrap;
-    transition: all var(--dur-fast) ease;
+    transition: color var(--dur-fast) ease;
   }
 
-  .menu-nav__pill:hover,
-  .menu-nav__pill.is-active {
+  .menu-nav__enlace::after {
+    content: "";
+    position: absolute;
+    left: var(--espacio-3);
+    right: var(--espacio-3);
+    bottom: -1px;
+    height: 3px;
+    border-radius: var(--radio-pill);
     background-color: var(--naranja-grill);
-    color: var(--texto-sobre-oro);
-    border-color: var(--naranja-grill);
+    transform: scaleX(0);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .menu-nav__enlace:hover,
+  .menu-nav__enlace[aria-current="true"] {
+    color: var(--texto);
+  }
+
+  .menu-nav__enlace[aria-current="true"]::after {
+    transform: scaleX(1);
   }
 </style>
 
 <script>
-  // Destacar pestaña activa según scroll
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.menu-nav__pill');
-  const sections = document.querySelectorAll<HTMLElement>('.menu-category-section');
+  // Marca la sección de la carta que se está leyendo
+  const enlaces = document.querySelectorAll<HTMLAnchorElement>('.menu-nav__enlace');
+  const secciones = document.querySelectorAll<HTMLElement>('.menu-category-section');
 
-  const onScroll = () => {
-    let currentId = '';
-    const scrollPos = window.scrollY + 140;
-
-    sections.forEach((sec) => {
-      if (sec.offsetTop <= scrollPos) {
-        currentId = sec.id;
-      }
-    });
-
-    navLinks.forEach((link) => {
-      const href = link.getAttribute('href')?.replace('#', '');
-      if (href === currentId) {
-        link.classList.add('is-active');
-      } else {
-        link.classList.remove('is-active');
-      }
-    });
-  };
-
-  window.addEventListener('scroll', onScroll, { passive: true });
+  if ('IntersectionObserver' in window && secciones.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          enlaces.forEach((a) => {
+            const activo = a.dataset.categoria === entry.target.id;
+            a.toggleAttribute('aria-current', activo);
+            if (activo) {
+              a.setAttribute('aria-current', 'true');
+              // Centra la pestaña activa en móvil sin mover la página
+              const lista = a.closest('ul');
+              lista?.scrollTo({ left: a.offsetLeft - (lista.clientWidth - a.offsetWidth) / 2 });
+            }
+          });
+        });
+      },
+      { rootMargin: '-30% 0px -60% 0px' }
+    );
+    secciones.forEach((s) => io.observe(s));
+  }
 </script>

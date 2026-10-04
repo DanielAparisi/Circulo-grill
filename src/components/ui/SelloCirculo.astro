@@ -1,0 +1,100 @@
+---
+// Sello circular: el logo sobre placa blanca redonda, rodeado por un disco
+// oro-logo con el nombre de la casa escrito en círculo (manual 7.3).
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const texto = 'CÍRCULO GRILL • BAR Y PARRILLA • LAS CASTILLAS • MECO • ';
+---
+
+<div class:list={['sello', className]}>
+  <span class="sello__disco-fondo" aria-hidden="true"></span>
+
+  <svg class="sello__anillo" viewBox="0 0 400 400" aria-hidden="true">
+    <defs>
+      <path id="sello-trazo" d="M200,200 m-158,0 a158,158 0 1,1 316,0 a158,158 0 1,1 -316,0" />
+    </defs>
+    <circle cx="200" cy="200" r="196" class="sello__oro" />
+    <circle cx="200" cy="200" r="186" class="sello__linea" />
+    <text class="sello__texto">
+      <textPath href="#sello-trazo" textLength="985" lengthAdjust="spacing">{texto}</textPath>
+    </text>
+    <circle cx="200" cy="200" r="134" class="sello__linea" />
+  </svg>
+
+  <div class="sello__placa">
+    <img
+      src="/logo-raw.png"
+      alt="Escudo de Círculo Grill: dos torres de castillo que abrazan una hamburguesa"
+      width="187"
+      height="187"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+</div>
+
+<style>
+  .sello {
+    position: relative;
+    width: min(100%, 420px);
+    aspect-ratio: 1;
+  }
+
+  /* Disco melocotón desplazado detrás, como las manchas de la carta */
+  .sello__disco-fondo {
+    position: absolute;
+    width: 46%;
+    aspect-ratio: 1;
+    top: -6%;
+    right: -8%;
+    border-radius: var(--radio-pill);
+    background-color: var(--melocoton);
+    opacity: 0.55;
+  }
+
+  .sello__anillo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sello__oro {
+    fill: var(--oro-logo);
+  }
+
+  .sello__linea {
+    fill: none;
+    stroke: var(--texto-sobre-oro);
+    stroke-opacity: 0.35;
+    stroke-width: 1.5;
+  }
+
+  .sello__texto {
+    fill: var(--texto-sobre-oro);
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 800;
+  }
+
+  /* Placa blanca circular: el logo nunca va directamente sobre oro (manual 7.2) */
+  .sello__placa {
+    position: absolute;
+    inset: 17.5%;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radio-pill);
+    background-color: var(--blanco);
+    box-shadow: var(--sombra-carta);
+  }
+
+  /* El PNG trae fondo blanco y un filo gris: se recorta y se funde con la placa */
+  .sello__placa img {
+    width: 74%;
+    height: auto;
+    clip-path: inset(3%);
+    mix-blend-mode: multiply;
+  }
+</style>

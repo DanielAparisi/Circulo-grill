@@ -8,171 +8,99 @@ interface Props {
 }
 
 const { item, class: className } = Astro.props;
-const isSpecial = item.isHouseSpecial;
+
+// Máximo dos etiquetas por plato (manual 10.2)
+const etiquetas = [
+  item.isHouseSpecial && 'destacado',
+  item.isNew && 'novedad',
+  item.isVegetarian && 'vegetariano',
+  item.isSpicy && 'picante',
+].filter(Boolean).slice(0, 2) as ('destacado' | 'novedad' | 'vegetariano' | 'picante')[];
 ---
 
-<article
-  class:list={[
-    'plato-carta',
-    isSpecial && 'plato-carta--destacado',
-    className,
-  ]}
-  id={`plato-${item.id}`}
->
-  {isSpecial && (
-    <div class="plato-carta__ribbon">
-      <span>PLATO DE LA CASA</span>
-    </div>
-  )}
-
-  <div class="plato-carta__header">
-    <div class="plato-carta__title-wrap">
-      <h3 class="plato-carta__title">{item.name}</h3>
-
-      <div class="plato-carta__badges">
-        {item.isVegetarian && <Badge variant="vegetariano" />}
-        {item.isSpicy && <Badge variant="picante" />}
-        {item.isNew && <Badge variant="novedad" />}
-      </div>
-    </div>
-
-    <!-- Guía de puntos que une nombre y precio -->
-    <span class="plato-carta__dots" aria-hidden="true"></span>
-
-    <!-- Precio sin símbolo de euro, en texto-ámbar y cifras tabulares -->
-    <span class="plato-carta__price" aria-label={`Precio: ${item.price} euros`}>
-      {item.price}
-    </span>
+<article class:list={['plato', className]} id={`plato-${item.id}`}>
+  <div class="plato__linea">
+    <h4 class="plato__nombre">
+      {item.name}
+      {etiquetas.map((v) => <Badge variant={v} class="plato__etiqueta" />)}
+    </h4>
+    <span class="plato__guia" aria-hidden="true"></span>
+    <p class="plato__precio">
+      <span class="visually-hidden">Precio: </span>{item.price}
+    </p>
   </div>
 
-  <p class="plato-carta__desc">{item.description}</p>
+  <p class="plato__desc">{item.description}</p>
 
   {item.options && item.options.length > 0 && (
-    <ul class="plato-carta__options" aria-label="Opciones del plato">
-      {item.options.map((opt) => (
-        <li class="plato-carta__option-item">{opt}</li>
-      ))}
+    <ul class="plato__opciones" aria-label={`Opciones de ${item.name}`}>
+      {item.options.map((opt) => <li>{opt}</li>)}
     </ul>
   )}
 </article>
 
 <style>
-  .plato-carta {
-    position: relative;
-    padding-top: var(--espacio-4);
-    padding-bottom: var(--espacio-4);
+  .plato {
+    padding-block: var(--espacio-4);
     border-bottom: 1px solid var(--borde);
   }
 
-  .plato-carta:last-child {
+  .plato:last-child {
     border-bottom: none;
   }
 
-  /* Variante destacada (AGENTS.md 10.4): fondo blanco, radio-l, sombra-carta y cinta superior en naranja-destacado */
-  .plato-carta--destacado {
-    background-color: var(--blanco);
-    border: 1px solid var(--borde);
-    border-radius: var(--radio-l);
-    padding: var(--espacio-5);
-    margin-top: var(--espacio-3);
-    margin-bottom: var(--espacio-3);
-    box-shadow: var(--sombra-carta);
-    overflow: hidden;
-  }
-
-  .plato-carta__ribbon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--naranja-destacado);
-    color: var(--texto-sobre-oro);
-    font-family: var(--font-texto);
-    font-size: 0.6875rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 3px var(--espacio-2);
-  }
-
-  .plato-carta--destacado .plato-carta__header {
-    margin-top: var(--espacio-2);
-  }
-
-  /* Línea base que une nombre, puntos y precio */
-  .plato-carta__header {
+  /* Nombre, guía de puntos y precio sobre la misma línea base */
+  .plato__linea {
     display: flex;
     align-items: baseline;
     gap: var(--espacio-2);
-    width: 100%;
   }
 
-  .plato-carta__title-wrap {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: var(--espacio-2);
-    max-width: 75%;
-  }
-
-  .plato-carta__title {
+  .plato__nombre {
     font-family: var(--font-texto);
     font-size: 1.0625rem;
     font-weight: 600;
     line-height: 1.35;
     color: var(--texto);
     margin: 0;
+    min-width: 0;
   }
 
-  .plato-carta__badges {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  .plato__nombre :global(.plato__etiqueta) {
+    margin-left: var(--espacio-2);
+    position: relative;
+    top: -1px;
   }
 
-  /* Guía de puntos en borde-fuerte uniendo nombre y precio */
-  .plato-carta__dots {
-    flex-grow: 1;
+  .plato__guia {
+    flex: 1;
+    min-width: var(--espacio-4);
     border-bottom: 2px dotted var(--borde-fuerte);
-    margin-bottom: 4px;
-    min-width: 16px;
+    transform: translateY(-4px);
   }
 
-  /* Precio con el estilo precio en texto-ambar, sin euro, cifras tabulares */
-  .plato-carta__price {
-    font-family: var(--font-texto);
+  .plato__precio {
+    margin: 0;
+    flex-shrink: 0;
     font-size: 1.0625rem;
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     color: var(--texto-ambar);
-    flex-shrink: 0;
-    text-align: right;
   }
 
-  /* Descripción con el estilo descripcion en texto-suave, max 46 caracteres aprox por línea */
-  .plato-carta__desc {
-    font-family: var(--font-texto);
+  .plato__desc {
+    max-width: 46ch;
+    margin: var(--espacio-1) 0 0;
     font-size: 0.875rem;
-    font-weight: 400;
     line-height: 1.45;
     color: var(--texto-suave);
-    margin-top: var(--espacio-2);
-    margin-bottom: 0;
-    max-width: 60ch;
   }
 
-  /* Lista de opciones con sangría espacio-4 (AGENTS.md) */
-  .plato-carta__options {
-    list-style: disc;
-    margin: var(--espacio-2) 0 0 0;
+  .plato__opciones {
+    margin: var(--espacio-2) 0 0;
     padding-left: var(--espacio-4);
-    font-family: var(--font-texto);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: var(--texto-suave);
-  }
-
-  .plato-carta__option-item {
-    margin-bottom: 2px;
   }
 </style>

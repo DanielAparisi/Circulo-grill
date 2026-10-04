@@ -107,6 +107,7 @@ const Tag = isLink ? 'a' : 'div';
   }
 
   .logo-plaque__text {
+    white-space: nowrap;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -119,6 +120,13 @@ const Tag = isLink ? 'a' : 'div';
     letter-spacing: 0.5px;
     line-height: 1.1;
     color: var(--texto);
+  }
+
+  /* En móvil estrecho solo la placa: deja sitio a "Pedir ahora" y al menú */
+  @media (max-width: 420px) {
+    .logo-plaque__text {
+      display: none;
+    }
   }
 
   .logo-plaque__sub {
