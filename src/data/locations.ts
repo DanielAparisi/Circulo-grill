@@ -64,7 +64,7 @@ export const locations: LocationInfo[] = [
     features: ['Carne a la brasa', 'Cervezas de grifo y artesanas', 'Ambiente familiar'],
     mapsUrl: 'https://maps.google.com/?q=El+Circulo+Grill+de+las+Castillas+Castillo+Simancas+3+Torrejon+del+Rey',
     reviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4',
-    orderOnlineUrl: 'https://www.ubereats.com/es/store/el-circulo-grill-de-las-castillas/94f71a06-b333-4df4-a8ae-8b38a7c29352',
+    orderOnlineUrl: 'https://www.just-eat.es/restaurants-el-circulo-de-las-castillas-torrejon-del-rey/menu',
     hasDelivery: true,
     hasTakeAway: true,
     hasTerrace: true,

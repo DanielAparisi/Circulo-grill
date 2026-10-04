@@ -1,6 +1,7 @@
 ---
 import Badge from '../ui/Badge.astro';
 import type { MenuItem } from '../../data/menu';
+import { conEuro } from '../../data/precio';
 
 interface Props {
   item: MenuItem;
@@ -26,7 +27,7 @@ const etiquetas = [
     </h4>
     <span class="plato__guia" aria-hidden="true"></span>
     <p class="plato__precio">
-      <span class="visually-hidden">Precio: </span>{item.price}
+      <span class="visually-hidden">Precio: </span>{conEuro(item.price)}
     </p>
   </div>
 

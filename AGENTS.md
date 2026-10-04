@@ -67,7 +67,7 @@ Se habla de tú, con el tono de quien atiende en barra: cercano y breve.
 Reglas cortas:
 
 - Mayúsculas solo en rótulos y etiquetas, nunca en una frase entera.
-- Precios sin símbolo de euro en la carta, como ya se hace. El decimal con coma: `7,5`.
+- Precios sin símbolo de euro en la carta impresa; **en la web, con euro** (`7,5 €`). El decimal con coma: `7,5`.
 - Los dos locales se nombran siempre completos — **Círculo Grill de Las Castillas** y **Círculo Grill & Go (Meco)** — porque tienen carta y teléfono distintos.
 
 ---
@@ -141,7 +141,7 @@ Dos familias, para no acabar con cinco:
 ### 5.2 Normas
 
 - Los rótulos (`rotulo-xl`, `rotulo-l`, `rotulo-m`, `seccion`) van **en mayúsculas**. Las descripciones, nunca.
-- El nombre del plato y su precio comparten línea base; el precio a la derecha, sin euro.
+- El nombre del plato y su precio comparten línea base; el precio a la derecha (con euro en la web).
 - Las etiquetas tipo `TAKE AWAY · DELIVERY` usan `etiqueta`, con el espaciado abierto que ya tienen las tarjetas de reparto.
 - Mínimo 14 px en pantalla y 9 pt en la carta impresa.
 
@@ -297,7 +297,7 @@ La unidad de la carta: nombre, etiquetas, precio y qué lleva.
 - Nombre con el estilo `plato`, en `texto`.
 - Etiquetas justo detrás del nombre, si las hay.
 - Guía de puntos en `borde-fuerte` uniendo nombre y precio.
-- Precio con el estilo `precio` en `texto-ambar`, sin euro, con cifras tabulares.
+- Precio con el estilo `precio` en `texto-ambar`, con cifras tabulares; en la web lleva euro.
 - Descripción con el estilo `descripcion` en `texto-suave`, máximo 46 caracteres de ancho y dos líneas.
 - Línea `borde` de 1 px entre platos, `espacio-4` de separación.
 

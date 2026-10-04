@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { menuCategories } from '../../data/menu';
+import { conEuro } from '../../data/precio';
 
 // Fotos de los platos: src/assets/images/platos/<id del plato>.jpg
 const fotos = import.meta.glob<{ default: ImageMetadata }>(
@@ -20,9 +21,9 @@ const platos = menuCategories.flatMap((cat) =>
 );
 ---
 
-<section class="casa" id="de-la-casa" aria-labelledby="casa-titulo">
+<section class="casa" id="destacados" aria-labelledby="casa-titulo">
   <header class="casa__cabecera">
-    <h3 id="casa-titulo" class="seccion">De la casa</h3>
+    <h3 id="casa-titulo" class="seccion">Lo más destacado</h3>
     <span class="casa__filete" aria-hidden="true"></span>
     <p class="casa__entradilla">Si es tu primera vez, empieza por aquí: los platos que salen de cocina una y otra vez.</p>
   </header>
@@ -46,7 +47,7 @@ const platos = menuCategories.flatMap((cat) =>
           <h4 class="casa__nombre">{plato.name}</h4>
           {plato.description && <p class="casa__desc">{plato.description}</p>}
           <p class="casa__precio">
-            <span class="visually-hidden">Precio: </span>{plato.price}
+            <span class="visually-hidden">Precio: </span>{conEuro(plato.price)}
           </p>
         </div>
       </li>

@@ -4,9 +4,9 @@
 export interface MenuItem {
   id: string;
   name: string;
-  price: string;           // "7,5", "5 / 5,5"
+  price: string;           // "7,5", "5 / 5,5" — sin €, lo añade conEuro() al pintar
   description?: string;
-  isHouseSpecial?: boolean; // Sale en "De la casa"; su foto va en src/assets/images/platos/<id>.jpg
+  isHouseSpecial?: boolean; // Sale en "Lo más destacado"; su foto va en src/assets/images/platos/<id>.jpg
   photoAlt?: string;        // Descripción de esa foto para lectores de pantalla
   isNew?: boolean;
   isSpicy?: boolean;        // Jalapeños, búfalo, chili (manual 10.2)
@@ -218,7 +218,7 @@ export const menuCategories: MenuCategory[] = [
         id: 'mixto',
         name: 'Mixto',
         price: '5 / 5,5',
-        description: 'Jamón york y queso (5) o bacon y queso (5,5).',
+        description: 'Jamón york y queso (5 €) o bacon y queso (5,5 €).',
       },
       {
         id: 'circulo-roll',
@@ -308,7 +308,7 @@ export const menuCategories: MenuCategory[] = [
         id: 'costillar-circulo',
         name: 'Costillar Círculo',
         price: '20 / 13',
-        description: 'Bañado en salsa BBQ, con patatas fritas. Entero (20) o medio (13).',
+        description: 'Bañado en salsa BBQ, con patatas fritas. Entero (20 €) o medio (13 €).',
         isHouseSpecial: true,
         photoAlt: 'Costillar Círculo glaseado en salsa BBQ con patatas fritas, en una mesa del local',
       },

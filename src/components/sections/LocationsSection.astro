@@ -73,8 +73,16 @@ import { locations } from '../../data/locations';
           <p class="local__servicios">{loc.services.join(' · ')}</p>
 
           <div class="local__acciones">
-            <Button href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" variant="secondary" size="md">
-              Cómo llegar a {loc.city}
+            <!-- Mismo texto en las dos fichas; el aria-label dice a qué local lleva cada uno -->
+            <Button
+              href={loc.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+              size="md"
+              aria-label={`Cómo llegar a ${loc.name} (se abre Google Maps)`}
+            >
+              Cómo llegar al Círculo
             </Button>
           </div>
         </article>
